@@ -40,11 +40,11 @@ export class SigninComponent implements OnInit {
         sessionStorage.setItem("authToken", resp.token);
 
         if (resp.code === 1) {
-
+          this.router.navigate(['app/home']);
         } else if (resp.code === 2) {
           this.router.navigate(['app/profile']);
-        } else {
-          
+        } else if (resp.code === 3){
+          this.router.navigate(['app/profile']);
         }
       })
     }

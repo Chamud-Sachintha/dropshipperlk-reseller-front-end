@@ -3,4 +3,6 @@ export class Request {
     flag!: any;
     userName!: string;
     password!: string;
+    pid!: string;
+    resellPrice!: string;
 }

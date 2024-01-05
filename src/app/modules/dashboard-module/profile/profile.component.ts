@@ -27,6 +27,11 @@ export class ProfileComponent implements OnInit {
     this.initProfileDetailsForm();
     this.initKYCUploadForm();
     this.getProfileInfo();
+    this.loadKYCList();
+  }
+
+  loadKYCList() {
+    
   }
 
   onChangeFrontImage($event: any) {
@@ -64,7 +69,7 @@ export class ProfileComponent implements OnInit {
         this.profileService.submitKYCInfo(this.kycModel).subscribe((resp: any) => {
 
           if (resp.code === 1) {
-  
+            
           }
         })
       })
