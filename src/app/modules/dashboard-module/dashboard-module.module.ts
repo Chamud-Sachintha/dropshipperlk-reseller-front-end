@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AllProductsComponent } from './all-products/all-products.component';
 import { InsideProductComponent } from './inside-product/inside-product.component';
 import { ResellProductsComponent } from './resell-products/resell-products.component';
+import { CheckListedProductComponent } from './check-listed-product/check-listed-product.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ResellProductsComponent } from './resell-products/resell-products.compo
     ProfileComponent,
     AllProductsComponent,
     InsideProductComponent,
-    ResellProductsComponent
+    ResellProductsComponent,
+    CheckListedProductComponent
   ],
   imports: [
     CommonModule,

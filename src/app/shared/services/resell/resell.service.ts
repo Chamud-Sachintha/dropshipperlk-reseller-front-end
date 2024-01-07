@@ -14,4 +14,9 @@ export class ResellService {
     const path = environment.apiURL + "resell-product";
     return this.http.post(path, requestParamModel);
   }
+
+  getResellProductList(requestParamModel: Request) {
+    const path = environment.apiURL + "get-resell-product-list";
+    return this.http.post(path, requestParamModel);
+  }
 }

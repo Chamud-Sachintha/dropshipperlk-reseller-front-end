@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AllProductsComponent } from './all-products/all-products.component';
 import { InsideProductComponent } from './inside-product/inside-product.component';
+import { ResellProductsComponent } from './resell-products/resell-products.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'product/:pid',
     component: InsideProductComponent
+  },
+  {
+    path: 'resell-products',
+    component: ResellProductsComponent
   },
   {
     path: 'profile',
