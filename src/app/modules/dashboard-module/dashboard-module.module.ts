@@ -9,6 +9,8 @@ import { AllProductsComponent } from './all-products/all-products.component';
 import { InsideProductComponent } from './inside-product/inside-product.component';
 import { ResellProductsComponent } from './resell-products/resell-products.component';
 import { CheckListedProductComponent } from './check-listed-product/check-listed-product.component';
+import { OrderManagementComponent } from './order-management/order-management.component';
+import { CheckOrderComponent } from './check-order/check-order.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { CheckListedProductComponent } from './check-listed-product/check-listed
     AllProductsComponent,
     InsideProductComponent,
     ResellProductsComponent,
-    CheckListedProductComponent
+    CheckListedProductComponent,
+    OrderManagementComponent,
+    CheckOrderComponent
   ],
   imports: [
     CommonModule,

@@ -9,4 +9,5 @@ export class OrderRequest {
     secondContact!: string;
     paymentMethod!: string;
     quantity!: string;
+    bankSlip!: string;
 }

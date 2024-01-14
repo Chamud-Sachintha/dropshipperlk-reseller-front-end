@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AllProductsComponent } from './all-products/all-products.component';
 import { InsideProductComponent } from './inside-product/inside-product.component';
 import { ResellProductsComponent } from './resell-products/resell-products.component';
+import { OrderManagementComponent } from './order-management/order-management.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'resell-products',
     component: ResellProductsComponent
+  },
+  {
+    path: 'order-management',
+    component: OrderManagementComponent
   },
   {
     path: 'profile',

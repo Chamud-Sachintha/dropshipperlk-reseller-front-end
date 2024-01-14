@@ -124,12 +124,16 @@
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">Payment Method</label>
-                            <select name="" id="" class="form-control" formControlName="paymentMethod">
+                            <select name="" id="" class="form-control" #paymentMethod formControlName="paymentMethod">
                                 <option value="">-- Select Payment Method</option>
-                                <option value="1">Cash On Delivery</option>
-                                <option value="2">Bank Deposit</option>
+                                <option value="1">Bank Deposit</option>
+                                <option value="2">Cash On Delivery</option>
                                 <option value="3">KOKO Payment</option>
                             </select>
+                        </div>
+                        <div class="col-12 mt-3" *ngIf="paymentMethod.value == '2'">
+                            <label for="">Bank Slip</label>
+                            <input type="file" class="form-control" (change)="onChangeBankSlip($event)">
                         </div>
                     </div>
                 </div>

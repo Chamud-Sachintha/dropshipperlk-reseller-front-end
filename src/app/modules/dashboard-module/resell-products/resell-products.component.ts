@@ -31,6 +31,11 @@ export class ResellProductsComponent implements OnInit {
     this.productId = productId;
   }
 
+  onChangeBankSlip(event: any) {
+    const file = (event.target as any).files[0]; 
+    this.placeOrderForm.patchValue({"bankSlip": file});
+  }
+
   onSubmitPlaceOrder() {
     const name = this.placeOrderForm.controls['name'].value;
     const address = this.placeOrderForm.controls['address'].value;
@@ -40,6 +45,7 @@ export class ResellProductsComponent implements OnInit {
     const secondContact = this.placeOrderForm.controls['secondContact'].value;
     const paymentMethod = this.placeOrderForm.controls['paymentMethod'].value;
     const quantity = this.placeOrderForm.controls['quantity'].value;
+    const bankSlip = this.placeOrderForm.controls['bankSlip'].value;
 
     if (name == "") {
 
@@ -68,6 +74,12 @@ export class ResellProductsComponent implements OnInit {
       this.orderRequestModel.pid = this.productId;
       this.orderRequestModel.quantity = quantity;
 
+      if (bankSlip != "") {
+        this.convertImageToBase64(bankSlip).then((base64String) => {
+          this.orderRequestModel.bankSlip = base64String;
+        })
+      }
+
       this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
 
         if (resp.code === 1) {
@@ -86,7 +98,8 @@ export class ResellProductsComponent implements OnInit {
       firstContact: ['', Validators.required],
       secondContact: ['', Validators.required],
       paymentMethod: ['', Validators.required],
-      quantity: ['', Validators.required]
+      quantity: ['', Validators.required],
+      bankSlip: ['', Validators.required]
     })
   }
 
@@ -104,6 +117,26 @@ export class ResellProductsComponent implements OnInit {
         })
       }
     })
+  }
+
+  convertImageToBase64(fileInput: any): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const file: File = fileInput;
+      const reader: FileReader = new FileReader();
+
+      reader.onloadend = () => {
+        // The result attribute contains the base64 string
+        const base64String: string = reader.result as string;
+        resolve(base64String);
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      // Read the image file as a Data URL
+      reader.readAsDataURL(file);
+    });
   }
 
 }
