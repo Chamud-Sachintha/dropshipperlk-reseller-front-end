@@ -50,7 +50,7 @@
                                     <td>{{ eachOrder.orderStatus }}</td>
                                     <td>{{ eachOrder.orderPlaceDate }}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm">Check</button>
+                                        <button class="btn btn-primary btn-sm" (click)="onClickCheckOrder(eachOrder.orderNumber)">Check</button>
                                     </td>
                                 </tr>
                             </tbody>

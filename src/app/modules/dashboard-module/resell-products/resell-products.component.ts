@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OrderRequest } from 'src/app/shared/models/OrderRequest/order-request';
 import { Product } from 'src/app/shared/models/Product/product';
 import { Request } from 'src/app/shared/models/Request/request';
@@ -20,11 +21,16 @@ export class ResellProductsComponent implements OnInit {
   resellProductList: ResellProduct[] = [];
   productId!: string;
 
-  constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService) {}
+  constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
+            , private router: Router) {}
 
   ngOnInit(): void {
     this.loadResellProductList();
     this.initPlaceOrderForm();
+  }
+
+  onClickCheckProduct(productId: string) {
+    this.router.navigate(['/app/check-product', productId]);
   }
 
   setProductId(productId: string) {

@@ -1,1 +1,93 @@
-<p>check-order works!</p>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <h2 class="pageheader-title">Hello, Welcome Back Chamud Sachintha </h2>
+            <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis
+                faucibus at enim quis massa lobortis rutrum.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">E-Commerce Dashboard Template</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="card-header">Product Informations</h5>
+                </div>
+                <div class="col-6">
+                    <h5 class="card-header" style="float: right;">Order Status - {{ this.orderInfoModel.orderStatus }}</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <img src="../../../../assets/images/product-pic.jpg" style="width: 525px; height: 500px;" alt="">
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h1>{{ this.orderInfoModel.productName }}</h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="">Quantity</label>
+                                        <h2>{{ this.orderInfoModel.quantity }}</h2>
+                                    </div>
+                                    <div class="col-5">
+                                        <label for="">Total Amount</label>
+                                        <h2>LKR. {{ this.orderInfoModel.totalAmount }} .00</h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="">Payment Status</label>
+                                        <h5>{{ this.orderInfoModel.paymentStatus }}</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="">Team Commision</label>
+                                        <h2>{{ this.orderInfoModel.teamCommision }} %</h2>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="">Direct Commision</label>
+                                        <h2>{{ this.orderInfoModel.directCommision }} %</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="this.orderInfoModel.cancleOrder == '1'">
+                            <div class="col-12">
+                                <button class="btn btn-danger btn-sm">Cancel Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                <img src="../../../../assets/images/avatar-4.jpg" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="../../../../assets/images/avatar-4.jpg" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="../../../../assets/images/avatar-4.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

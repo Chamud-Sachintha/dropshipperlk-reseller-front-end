@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderInfo } from 'src/app/shared/models/OrderInfo/order-info';
 import { Request } from 'src/app/shared/models/Request/request';
 import { OrderService } from 'src/app/shared/services/order/order.service';
@@ -13,10 +14,14 @@ export class OrderManagementComponent implements OnInit {
   requestParamModel = new Request();
   orderInfoList: OrderInfo[] = [];
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrderList();
+  }
+
+  onClickCheckOrder(orderNumber: string) {
+    this.router.navigate(['/app/check-order', orderNumber]);
   }
 
   loadOrderList() {

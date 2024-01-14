@@ -20,4 +20,9 @@ export class OrderService {
     const path = environment.apiURL + "get-order-list";
     return this.http.post(path, requestParamModel);
   }
+
+  getOrderInfoByOrder(requestParamModel: Request) {
+    const path = environment.apiURL + "get-order-info";
+    return this.http.post(path, requestParamModel);
+  }
 }

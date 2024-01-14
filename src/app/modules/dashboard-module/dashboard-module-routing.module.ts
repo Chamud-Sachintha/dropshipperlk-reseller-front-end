@@ -6,6 +6,8 @@ import { AllProductsComponent } from './all-products/all-products.component';
 import { InsideProductComponent } from './inside-product/inside-product.component';
 import { ResellProductsComponent } from './resell-products/resell-products.component';
 import { OrderManagementComponent } from './order-management/order-management.component';
+import { CheckOrderComponent } from './check-order/check-order.component';
+import { CheckListedProductComponent } from './check-listed-product/check-listed-product.component';
 
 const routes: Routes = [
   {
@@ -31,8 +33,16 @@ const routes: Routes = [
     component: ResellProductsComponent
   },
   {
+    path: 'check-product/:orderId',
+    component: CheckListedProductComponent
+  },
+  {
     path: 'order-management',
     component: OrderManagementComponent
+  },
+  {
+    path: 'check-order/:orderNumber',
+    component: CheckOrderComponent
   },
   {
     path: 'profile',

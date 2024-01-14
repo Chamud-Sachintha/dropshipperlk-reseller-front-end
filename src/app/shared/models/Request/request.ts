@@ -5,4 +5,5 @@ export class Request {
     password!: string;
     pid!: string;
     resellPrice!: string;
+    orderNumber!: string;
 }
