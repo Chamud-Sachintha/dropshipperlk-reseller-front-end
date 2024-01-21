@@ -69,30 +69,38 @@ export class ResellProductsComponent implements OnInit {
 
     } else {
 
-      this.orderRequestModel.token = sessionStorage.getItem("authToken");
-      this.orderRequestModel.name = name;
-      this.orderRequestModel.address = address;
-      this.orderRequestModel.city = city;
-      this.orderRequestModel.district = district;
-      this.orderRequestModel.firstContact = firstContact;
-      this.orderRequestModel.secondContact = secondContact;
-      this.orderRequestModel.paymentMethod = paymentMethod;
-      this.orderRequestModel.pid = this.productId;
-      this.orderRequestModel.quantity = quantity;
-
       if (bankSlip != "") {
         this.convertImageToBase64(bankSlip).then((base64String) => {
-          this.orderRequestModel.bankSlip = base64String;
+          this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, base64String);
         })
+      } else {
+        this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity);
       }
-
-      this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
-
-        if (resp.code === 1) {
-
-        }
-      })
     }
+  }
+
+  placeOrder(name: string, address: string, city: string, district: string, firstContact: string, secondContact: string, paymentMethod: string, quantity: string, bankSlip = "") {
+    this.orderRequestModel.token = sessionStorage.getItem("authToken");
+    this.orderRequestModel.name = name;
+    this.orderRequestModel.address = address;
+    this.orderRequestModel.city = city;
+    this.orderRequestModel.district = district;
+    this.orderRequestModel.firstContact = firstContact;
+    this.orderRequestModel.secondContact = secondContact;
+    this.orderRequestModel.paymentMethod = paymentMethod;
+    this.orderRequestModel.pid = this.productId;
+    this.orderRequestModel.quantity = quantity;
+
+    if (bankSlip != "") {
+      this.orderRequestModel.bankSlip = bankSlip;
+    }
+
+    this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
+
+      if (resp.code === 1) {
+
+      }
+    })
   }
 
   initPlaceOrderForm() {

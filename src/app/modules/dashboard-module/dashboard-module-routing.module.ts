@@ -8,6 +8,7 @@ import { ResellProductsComponent } from './resell-products/resell-products.compo
 import { OrderManagementComponent } from './order-management/order-management.component';
 import { CheckOrderComponent } from './check-order/check-order.component';
 import { CheckListedProductComponent } from './check-listed-product/check-listed-product.component';
+import { ProfitLogComponent } from './profit-log/profit-log.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'order-management',
     component: OrderManagementComponent
+  },
+  {
+    path: 'profit-log',
+    component: ProfitLogComponent
   },
   {
     path: 'check-order/:orderNumber',

@@ -25,6 +25,18 @@ export class CheckOrderComponent implements OnInit {
     this.loadOrderInfo();
   }
 
+  onClickCancleOrder() {
+    this.requestModel.token = sessionStorage.getItem("authToken");
+    this.requestModel.orderNumber = this.orderNumber;
+
+    this.orderService.cancleOrder(this.requestModel).subscribe((resp: any) => {
+
+      if (resp.code === 1) {
+        location.reload();
+      }
+    })
+  }
+
   loadOrderInfo() {
     this.requestModel.token = sessionStorage.getItem("authToken");
     this.requestModel.orderNumber = this.orderNumber;
@@ -42,6 +54,7 @@ export class CheckOrderComponent implements OnInit {
         this.orderInfoModel.cancleOrder = dataList.data[0].cancleOrder;
         this.orderInfoModel.teamCommision = dataList.data[0].teamCommision;
         this.orderInfoModel.directCommision = dataList.data[0].directCommision;
+        this.orderInfoModel.orderCancled = dataList.data[0].orderCancled;
       }
     })
   }

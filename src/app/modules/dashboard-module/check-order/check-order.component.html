@@ -65,9 +65,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" *ngIf="this.orderInfoModel.cancleOrder == '1'">
+                        <div class="row" *ngIf="this.orderInfoModel.cancleOrder == '1' && !this.orderInfoModel.orderCancled">
                             <div class="col-12">
-                                <button class="btn btn-danger btn-sm">Cancel Order</button>
+                                <button class="btn btn-danger btn-sm" (click)="onClickCancleOrder()">Cancel Order</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="this.orderInfoModel.orderCancled">
+                            <div class="col-12">
+                                <span class="badge badge-danger">Already Cancled Order</span>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="alert alert-primary" role="alert">
+                                    This Order is Cancled By You.
+                                    <hr>
+                                    <div *ngIf="this.orderInfoModel.paymentStatus != 'Refunded'">
+                                        Refund Query is Maded Now. As soon as Admin refunded and approved we've let you know.
+                                    </div>
+                                    <div *ngIf="this.orderInfoModel.paymentStatus == 'Refunded'">
+                                        Refund Query is Approved Now. Check your Bank Account.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

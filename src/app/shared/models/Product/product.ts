@@ -9,4 +9,7 @@ export class Product {
     directCommision!: string;
     isResell!: boolean;
     createTime!: string;
+    in_colombo_charges!: string;
+    out_of_colombo_charges!: string;
+    images!: string;
 }

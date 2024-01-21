@@ -25,4 +25,9 @@ export class OrderService {
     const path = environment.apiURL + "get-order-info";
     return this.http.post(path, requestParamModel);
   }
+
+  cancleOrder(requestParamModel: Request) {
+    const path = environment.apiURL + "cancle-order";
+    return this.http.post(path, requestParamModel);
+  }
 }

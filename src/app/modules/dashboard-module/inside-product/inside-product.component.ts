@@ -88,6 +88,8 @@ export class InsideProductComponent implements OnInit {
         this.productInfoModel.categoryName = dataList.data[0].cetagoryName;
         this.productInfoModel.inStock = dataList.data[0].inStock;
         this.productInfoModel.isResell = dataList.data[0].isResell;
+        this.productInfoModel.in_colombo_charges = dataList.data[0].in_colombo_charges;
+        this.productInfoModel.out_of_colombo_charges = dataList.data[0].out_of_colombo_charges;
       }
     })
   }

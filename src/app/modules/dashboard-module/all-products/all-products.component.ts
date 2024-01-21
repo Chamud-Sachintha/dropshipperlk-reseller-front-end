@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/shared/models/Product/product';
 import { Request } from 'src/app/shared/models/Request/request';
 import { ProductService } from 'src/app/shared/services/product/product.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-all-products',
@@ -21,8 +22,8 @@ export class AllProductsComponent implements OnInit {
   }
 
   seeProduct(pid: string) {
-    console.log(pid)
     this.router.navigate(['app/product', pid]);
+    return false;
   }
 
   loadAllProductList() {
@@ -34,6 +35,9 @@ export class AllProductsComponent implements OnInit {
 
       if (resp.code === 1) {
         dataList.data[0].forEach((eachProduct: Product) => {
+          const thumbnailImageUrl = environment.fileServer + "images/" + eachProduct.images;
+          eachProduct.images = thumbnailImageUrl;
+
           this.productList.push(eachProduct);
         })
       }

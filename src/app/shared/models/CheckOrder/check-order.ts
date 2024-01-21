@@ -7,4 +7,5 @@ export class CheckOrder {
     cancleOrder!: string;
     teamCommision!: string;
     directCommision!: string;
+    orderCancled!: string;
 }
