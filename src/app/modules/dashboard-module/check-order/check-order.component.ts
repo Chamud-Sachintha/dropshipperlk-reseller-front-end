@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { CheckOrder } from 'src/app/shared/models/CheckOrder/check-order';
 import { Request } from 'src/app/shared/models/Request/request';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-check-order',
@@ -16,7 +19,8 @@ export class CheckOrderComponent implements OnInit {
   orderInfoModel = new CheckOrder();
   orderNumber!: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService) {}
+  constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService
+            , private tostr: ToastrService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
 
@@ -29,11 +33,17 @@ export class CheckOrderComponent implements OnInit {
     this.requestModel.token = sessionStorage.getItem("authToken");
     this.requestModel.orderNumber = this.orderNumber;
 
+    this.spinner.show();
     this.orderService.cancleOrder(this.requestModel).subscribe((resp: any) => {
 
       if (resp.code === 1) {
+        this.tostr.success("Cancle Order", "Ordr Cancle Successfully");
         location.reload();
+      } else {
+        this.tostr.error("Cancle Order", resp.message);
       }
+
+      this.spinner.hide();
     })
   }
 
@@ -55,6 +65,10 @@ export class CheckOrderComponent implements OnInit {
         this.orderInfoModel.teamCommision = dataList.data[0].teamCommision;
         this.orderInfoModel.directCommision = dataList.data[0].directCommision;
         this.orderInfoModel.orderCancled = dataList.data[0].orderCancled;
+        this.orderInfoModel.image1 = environment.fileServer + "images/" + dataList.data[0].images.image0;
+        this.orderInfoModel.image2 = environment.fileServer + "images/" + dataList.data[0].images.image1;
+        this.orderInfoModel.image3 = environment.fileServer + "images/" + dataList.data[0].images.image2;
+        this.orderInfoModel.image4 = environment.fileServer + "images/" + dataList.data[0].images.image3;
       }
     })
   }

@@ -8,4 +8,8 @@ export class CheckOrder {
     teamCommision!: string;
     directCommision!: string;
     orderCancled!: string;
+    image1!: string;
+    image2!: string;
+    image3!: string;
+    image4!: string;
 }

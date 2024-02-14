@@ -15,3 +15,64 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">Profit Log Informations</h5>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered first">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Order Number</th>
+                                    <th>Product Name</th>
+                                    <th>Log Type</th>
+                                    <th>Resell Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total Amount</th>
+                                    <th>Direct Commision</th>
+                                    <th>Team Commision</th>
+                                    <th>Profit</th>
+                                    <th>Profit Total</th>
+                                </tr>
+                            </thead>
+                           <tbody>
+                            <tr *ngFor="let eachData of this.profitLogDataList; index as i">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ eachData.orderNumber }}</td>
+                                <td>{{ eachData.productName }}</td>
+                                <td>{{ eachData.logType }}</td>
+                                <td>{{ eachData.resellPrice }}</td>
+                                <td>{{ eachData.quantity }}</td>
+                                <td>{{ eachData.totalAmount }}</td>
+                                <td>{{ eachData.directCommision }}</td>
+                                <td>{{ eachData.teamCommision }}</td>
+                                <td>{{ eachData.profit }}</td>
+                                <td>{{ eachData.profitTotal }}</td>
+                            </tr>
+                           </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Order Number</th>
+                                    <th>Product Name</th>
+                                    <th>Log Type</th>
+                                    <th>Resell Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total Amount</th>
+                                    <th>Direct Commision</th>
+                                    <th>Team Commision</th>
+                                    <th>Profit</th>
+                                    <th>Profit Total</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

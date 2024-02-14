@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { KYCInfo } from 'src/app/shared/models/KYCInfo/kycinfo';
 import { Profile } from 'src/app/shared/models/Profile/profile';
 import { Request } from 'src/app/shared/models/Request/request';
@@ -21,7 +23,8 @@ export class ProfileComponent implements OnInit {
   isProfileModalOpen = false;
   isAddKYCModalOpen = false;
 
-  constructor(private profileService: ProfileService, private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private profileService: ProfileService, private formBuilder: FormBuilder, private router: Router
+            , private tostr: ToastrService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.initProfileDetailsForm();
@@ -66,11 +69,16 @@ export class ProfileComponent implements OnInit {
       this.convertImageToBase64(backImage).then((base64String) => {
         this.kycModel.backImg = base64String;
       }).then(() => {
+        this.spinner.show();
         this.profileService.submitKYCInfo(this.kycModel).subscribe((resp: any) => {
 
           if (resp.code === 1) {
-            
+            this.tostr.success("KYC Documets Upload", "KYC Documents Uploading Successfully.");
+          } else {
+            this.tostr.error("KYC Socument Uploadiung", resp.message);
           }
+
+          this.spinner.hide();
         })
       })
     }

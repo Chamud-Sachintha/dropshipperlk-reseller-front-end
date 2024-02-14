@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { OrderRequest } from 'src/app/shared/models/OrderRequest/order-request';
 import { Product } from 'src/app/shared/models/Product/product';
 import { Request } from 'src/app/shared/models/Request/request';
@@ -22,7 +24,7 @@ export class ResellProductsComponent implements OnInit {
   productId!: string;
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
-            , private router: Router) {}
+            , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.loadResellProductList();
@@ -30,7 +32,7 @@ export class ResellProductsComponent implements OnInit {
   }
 
   onClickCheckProduct(productId: string) {
-    this.router.navigate(['/app/check-product', productId]);
+    this.router.navigate(['/app/product', productId]);
   }
 
   setProductId(productId: string) {
@@ -54,19 +56,19 @@ export class ResellProductsComponent implements OnInit {
     const bankSlip = this.placeOrderForm.controls['bankSlip'].value;
 
     if (name == "") {
-
+      this.tostr.error("Empty Field Found", "Name is required");
     } else if (address == "") {
-
+      this.tostr.error("Empty Field Found", "Address is required");
     } else if (city == "") {
-
+      this.tostr.error("Empty Field Found", "City is required");
     } else if (district == "") {
-
+      this.tostr.error("Empty Field Found", "Dictrict is required");
     } else if (firstContact == "") {
-
+      this.tostr.error("Empty Field Found", "First Contact is required");
     } else if (secondContact == "") {
-
+      this.tostr.error("Empty Field Found", "Second Contact is required");
     } else if (paymentMethod == "") {
-
+      this.tostr.error("Empty Field Found", "Payment Method is required");
     } else {
 
       if (bankSlip != "") {
@@ -95,11 +97,16 @@ export class ResellProductsComponent implements OnInit {
       this.orderRequestModel.bankSlip = bankSlip;
     }
 
+    this.spinner.show();
     this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
 
       if (resp.code === 1) {
-
+        this.tostr.success("Place New Order", "Order Place Successfully.");
+      } else {
+        this.tostr.error("Place New Order", resp.message);
       }
+
+      this.spinner.hide();
     })
   }
 

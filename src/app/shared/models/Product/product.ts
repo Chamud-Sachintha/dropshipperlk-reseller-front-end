@@ -12,4 +12,8 @@ export class Product {
     in_colombo_charges!: string;
     out_of_colombo_charges!: string;
     images!: string;
+    image1!: string;
+    image2!: string;
+    image3!: string;
+    image4!: string;
 }

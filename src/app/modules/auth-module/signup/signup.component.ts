@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { Auth } from 'src/app/shared/models/Auth/auth';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
@@ -14,7 +16,8 @@ export class SignupComponent implements OnInit {
   authModel = new Auth();
   registerResellerForm!: FormGroup;
 
-  constructor (private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {}
+  constructor (private formBuilder: FormBuilder, private router: Router, private authService: AuthService
+              , private tostr: ToastrService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.initRegisterResellerForm();
@@ -31,23 +34,21 @@ export class SignupComponent implements OnInit {
     const refCode = this.registerResellerForm.controls['refCode'].value;
 
     if (fullName == "") {
-
+      this.tostr.error("Empty Field Foud", "Full name is required.");
     } else if (bName == "") {
-
+      this.tostr.error("Empty Field Foud", "Buidness Name is required.");
     } else if (address == "") {
-
-    } else if (address == "") {
-
+      this.tostr.error("Empty Field Foud", "Address is required.");
     } else if (phoneNumber == "") {
-
+      this.tostr.error("Empty Field Foud", "Mobile is required.");
     } else if (nicNumber == "") {
-
+      this.tostr.error("Empty Field Foud", "NIC Number is required.");
     } else if (email == "") {
-
+      this.tostr.error("Empty Field Foud", "Email is required.");
     } else if (password == "") {
-
+      this.tostr.error("Empty Field Foud", "Passsword is required.");
     } else if (refCode == "") {
-
+      this.tostr.error("Empty Field Foud", "RefCode is required.");
     } else {
       this.authModel.fullName = fullName;
       this.authModel.bName = bName;
@@ -58,11 +59,16 @@ export class SignupComponent implements OnInit {
       this.authModel.password = password;
       this.authModel.refCode = refCode;
 
+      this.spinner.show();
       this.authService.registerNewReseller(this.authModel).subscribe((resp: any) => {
 
         if (resp.code === 1) {
-          console.log(resp);
+          this.tostr.success("Register User", "Use Register Suvvessfully");
+        } else {
+          this.tostr.error("Register User", resp.message);
         }
+
+        this.spinner.hide();
       })
     }
   }

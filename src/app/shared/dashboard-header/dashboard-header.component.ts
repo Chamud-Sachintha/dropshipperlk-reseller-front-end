@@ -17,6 +17,9 @@ export class DashboardHeaderComponent implements OnInit {
   onClickLogOut() {
     sessionStorage.clear();
     this.router.navigate(['/auth/login'])
+
+    return false;
+    
   }
 
 }
