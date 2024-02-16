@@ -9,6 +9,7 @@ import { OrderManagementComponent } from './order-management/order-management.co
 import { CheckOrderComponent } from './check-order/check-order.component';
 import { CheckListedProductComponent } from './check-listed-product/check-listed-product.component';
 import { ProfitLogComponent } from './profit-log/profit-log.component';
+import { MyTeamComponent } from './my-team/my-team.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
+  },
+  {
+    path: 'my-team',
+    component: MyTeamComponent
   }
 ];
 

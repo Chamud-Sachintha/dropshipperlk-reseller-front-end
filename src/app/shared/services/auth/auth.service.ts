@@ -20,4 +20,9 @@ export class AuthService {
     const path = environment.apiURL + "login";
     return this.http.post(path, requestModel);
   }
+
+  getTeam(requestParamModel: Request) {
+    const path = environment.apiURL + "get-team";
+    return this.http.post(path, requestParamModel);
+  }
 }

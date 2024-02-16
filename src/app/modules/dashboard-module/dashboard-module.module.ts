@@ -12,6 +12,7 @@ import { CheckListedProductComponent } from './check-listed-product/check-listed
 import { OrderManagementComponent } from './order-management/order-management.component';
 import { CheckOrderComponent } from './check-order/check-order.component';
 import { ProfitLogComponent } from './profit-log/profit-log.component';
+import { MyTeamComponent } from './my-team/my-team.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ProfitLogComponent } from './profit-log/profit-log.component';
     CheckListedProductComponent,
     OrderManagementComponent,
     CheckOrderComponent,
-    ProfitLogComponent
+    ProfitLogComponent,
+    MyTeamComponent
   ],
   imports: [
     CommonModule,
