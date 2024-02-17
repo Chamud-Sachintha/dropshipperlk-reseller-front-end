@@ -42,6 +42,7 @@ export class SigninComponent implements OnInit {
         const dataList = JSON.parse(JSON.stringify(resp));
 
         sessionStorage.setItem("authToken", resp.token);
+        sessionStorage.setItem("kycStatus", resp.code);
 
         if (resp.code === 1) {
           this.tostr.success("User Authentication", "Login Sucess");

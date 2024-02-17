@@ -20,7 +20,7 @@ export class MyTeamComponent implements OnInit {
   }
 
   loadTeam() {
-    this.requestParamModel.token = sessionStorage.getItem("authtoken");
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
     
     this.authService.getTeam(this.requestParamModel).subscribe((resp: any) => {
 

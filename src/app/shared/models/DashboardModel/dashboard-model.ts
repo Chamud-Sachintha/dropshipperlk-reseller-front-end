@@ -8,4 +8,5 @@ export class DashboardModel {
     paidOrders!: string;
     totalEarnigs!: string;
     pendingPayment!: string;
+    refCode!: string;
 }
