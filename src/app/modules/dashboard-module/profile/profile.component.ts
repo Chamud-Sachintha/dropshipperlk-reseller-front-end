@@ -56,9 +56,9 @@ export class ProfileComponent implements OnInit {
     const backImage = this.kycUploadForm.controls['backImg'].value;
 
     if (frontImage == "") {
-
+      this.tostr.error("Empty Field Founded", "Front Image is required.");
     } else if (backImage == "") {
-
+      this.tostr.error("Empty Field Founded", "Back Image is required.");
     } else {
       this.kycModel.token = sessionStorage.getItem("authToken");
       
