@@ -11,6 +11,7 @@ import { CheckListedProductComponent } from './check-listed-product/check-listed
 import { ProfitLogComponent } from './profit-log/profit-log.component';
 import { MyTeamComponent } from './my-team/my-team.component';
 import { AuthGuard } from '../../guards/Auth/auth.guard';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent
   },
   {
     path: 'my-team',

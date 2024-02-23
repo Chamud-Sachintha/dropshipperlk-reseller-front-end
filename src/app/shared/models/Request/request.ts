@@ -6,4 +6,6 @@ export class Request {
     pid!: string;
     resellPrice!: string;
     orderNumber!: string;
+    productId!: string;
+    quantity!: string;
 }

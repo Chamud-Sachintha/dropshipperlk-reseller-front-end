@@ -18,7 +18,21 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Product Informations</h5>
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="card-header">Product Informations</h5>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="card-header" style="float: right;">Total Amount: LKR. {{ this.cartItemModel.totalAmount }} .00</h5>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-primary btn-sm mt-2" data-toggle="modal" data-target="#exampleModal" (click)="placeOrderByCart()">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -29,41 +43,24 @@
                                     <th>#</th>
                                     <th>Product Name</th>
                                     <th>Category Name</th>
-                                    <th>Description</th>
+                                    <th>Image</th>
                                     <th>Price</th>
-                                    <th>Resell Price</th>
-                                    <th>Status</th>
-                                    <th>Listed Date</th>
+                                    <th>Added Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let eachProduct of this.resellProductList; index as i">
+                                <tr *ngFor="let eachData of this.cartItemList; index as i">
                                     <td>{{ i + 1 }}</td>
-                                    <td>{{ eachProduct.productName }}</td>
-                                    <td>{{ eachProduct.categoryName }}</td>
-                                    <td>{{ eachProduct.description }}</td>
-                                    <td>{{ eachProduct.price }} .00</td>
-                                    <td>{{ eachProduct.resellPrice }} .00</td>
-                                    <td>{{ eachProduct.status }}</td>
-                                    <td>{{ eachProduct.resellTime }}</td>
-                                    <td style="width: 150px;">
-                                        <div class="row text-center">
-                                            <div class="col-12">
-                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal2" style="width: 150px;" (click)="onClickAddtoCart(eachProduct.productId)">Add to Cart</button>
-                                            </div>
-                                            <div class="col-12 mt-2">
-                                                <button class="btn btn-success btn-sm" style="width: 150px;"
-                                                    data-toggle="modal" data-target="#exampleModal" (click)="setProductId(eachProduct.productId)">Place Order</button>
-                                            </div>
-                                            <div class="col-12 mt-2">
-                                                <button class="btn btn-primary btn-sm" style="width: 150px;" (click)="onClickCheckProduct(eachProduct.productId)">Check
-                                                    Product</button>
-                                            </div>
-                                            <div class="col-12 mt-2">
-                                                <button class="btn btn-danger btn-sm" style="width: 150px;" (click)="removeResellProduct(eachProduct.productId)">Remove</button>
-                                            </div>
-                                        </div>
+                                    <td>{{ eachData.productName }}</td>
+                                    <td>{{ eachData.categoryName }}</td>
+                                    <td>
+                                        <img src="{{ eachData.image }}" style="width: 200px;" alt="">
+                                    </td>
+                                    <td>{{ eachData.price }}</td>
+                                    <td>{{ eachData.createTime | date }}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Check Product</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -72,11 +69,9 @@
                                     <th>#</th>
                                     <th>Product Name</th>
                                     <th>Category Name</th>
-                                    <th>Description</th>
+                                    <th>Image</th>
                                     <th>Price</th>
-                                    <th>Resell Price</th>
-                                    <th>Status</th>
-                                    <th>Listed Date</th>
+                                    <th>Added Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </tfoot>
@@ -97,7 +92,7 @@
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
-            <form [formGroup]="this.placeOrderForm" (ngSubmit)="onSubmitPlaceOrder()">
+            <form [formGroup]="this.placeOrderForm" (ngSubmit)="placeOrderByCart()">
                 <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
                     <div class="row">
                         <div class="col-12">
@@ -151,32 +146,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add to Cart</h5>
-                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
-                <form [formGroup]="this.addProductQuantityForm" (ngSubmit)="onSubmitAddQuantityForm()">
-                    <div class="row">
-                        <div class="col-12">
-                            <label for="">Enter Quantity</label>
-                            <input type="text" class="form-control" formControlName="quantity">
-                        </div>
-                        <div class="col-12 mt-3">
-                            <button class="btn btn-primary btn-sm" type="submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 </div>

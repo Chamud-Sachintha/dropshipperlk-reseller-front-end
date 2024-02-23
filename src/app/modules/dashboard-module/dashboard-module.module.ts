@@ -13,6 +13,8 @@ import { OrderManagementComponent } from './order-management/order-management.co
 import { CheckOrderComponent } from './check-order/check-order.component';
 import { ProfitLogComponent } from './profit-log/profit-log.component';
 import { MyTeamComponent } from './my-team/my-team.component';
+import { SessionInfoComponent } from './session-info/session-info.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -26,13 +28,15 @@ import { MyTeamComponent } from './my-team/my-team.component';
     OrderManagementComponent,
     CheckOrderComponent,
     ProfitLogComponent,
-    MyTeamComponent
+    MyTeamComponent,
+    SessionInfoComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,
     DashboardModuleRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class DashboardModuleModule { }

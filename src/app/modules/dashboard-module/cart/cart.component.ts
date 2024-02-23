@@ -1,103 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { CartItem } from 'src/app/shared/models/CartItem/cart-item';
 import { OrderRequest } from 'src/app/shared/models/OrderRequest/order-request';
-import { Product } from 'src/app/shared/models/Product/product';
 import { Request } from 'src/app/shared/models/Request/request';
-import { ResellProduct } from 'src/app/shared/models/ResellProduct/resell-product';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
-import { ResellService } from 'src/app/shared/services/resell/resell.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
-  selector: 'app-resell-products',
-  templateUrl: './resell-products.component.html',
-  styleUrls: ['./resell-products.component.css']
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css']
 })
-export class ResellProductsComponent implements OnInit {
+export class CartComponent implements OnInit {
 
   requestParamModel = new Request();
+  cartItemModel = new CartItem();
+  cartItemList: CartItem[] = [];
   placeOrderForm!: FormGroup;
-  addProductQuantityForm!: FormGroup;
-  orderRequestModel = new OrderRequest();
-  resellProductList: ResellProduct[] = [];
-  productId!: string;
+  orderRequestModel = new OrderRequest;
 
-  constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
-            , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
-            , private productService: ProductService) {}
+  constructor(private productService: ProductService, private formBuilder: FormBuilder, private tostr: ToastrService
+            , private orderService: OrderService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
-    this.loadResellProductList();
+    this.loadCartItemList();
     this.initPlaceOrderForm();
-    this.initAddProductQuantityForm();
-  }
-
-  removeResellProduct(productId: string) {
-    this.requestParamModel.token = sessionStorage.getItem("authToken");
-    this.requestParamModel.productId = productId;
-
-    this.resellService.removeResell(this.requestParamModel).subscribe((resp: any) => {
-      if (resp.code === 1) {
-        this.tostr.success("Remove Product From List", "Remove Successfully.");
-      } else {
-        this.tostr.error("Remove Product From List", resp.message);
-      }
-    })
-  }
-
-  onSubmitAddQuantityForm() {
-    const quantity = this.addProductQuantityForm.controls['quantity'].value;
-
-    if (quantity == "") {
-      this.tostr.error("Empty Field Found", "Quantity is required");
-    } else {
-      this.requestParamModel.token = sessionStorage.getItem("authToken");
-      this.requestParamModel.productId = this.productId;
-      this.requestParamModel.quantity = quantity;
-
-      this.productService.addToCart(this.requestParamModel).subscribe((resp: any) => {
-        if (resp.code === 1) {
-          this.tostr.success("Add to Cart", "Product is Added cto Cart");
-  
-          location.reload();
-        } else {
-          this.tostr.error("Add to Cart", resp.message);
-        }
-      })
-    }
-  }
-
-  initAddProductQuantityForm() {
-    this.addProductQuantityForm = this.formBuilder.group({
-      quantity: ['', Validators.required]
-    })
-  }
-
-  onClickAddtoCart(productId: string) {
-    this.productId = productId;
-    // this.requestParamModel.token = sessionStorage.getItem("authToken");
-    // this.requestParamModel.productId = productId;
-
-    // this.productService.addToCart(this.requestParamModel).subscribe((resp: any) => {
-    //   if (resp.code === 1) {
-    //     this.tostr.success("Add to Cart", "Product is Added cto Cart");
-
-    //     location.reload();
-    //   } else {
-    //     this.tostr.error("Add to Cart", resp.message);
-    //   }
-    // })
-  }
-
-  onClickCheckProduct(productId: string) {
-    this.router.navigate(['/app/product', productId]);
-  }
-
-  setProductId(productId: string) {
-    this.productId = productId;
   }
 
   onChangeBankSlip(event: any) {
@@ -105,7 +35,7 @@ export class ResellProductsComponent implements OnInit {
     this.placeOrderForm.patchValue({"bankSlip": file});
   }
 
-  onSubmitPlaceOrder() {
+  placeOrderByCart() {
     const name = this.placeOrderForm.controls['name'].value;
     const address = this.placeOrderForm.controls['address'].value;
     const city = this.placeOrderForm.controls['city'].value;
@@ -139,7 +69,7 @@ export class ResellProductsComponent implements OnInit {
       } else {
         this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity);
       }
-    }
+    } 
   }
 
   placeOrder(name: string, address: string, city: string, district: string, firstContact: string, secondContact: string, paymentMethod: string, quantity: string, bankSlip = "") {
@@ -151,7 +81,7 @@ export class ResellProductsComponent implements OnInit {
     this.orderRequestModel.firstContact = firstContact;
     this.orderRequestModel.secondContact = secondContact;
     this.orderRequestModel.paymentMethod = paymentMethod;
-    this.orderRequestModel.pid = this.productId;
+    // this.orderRequestModel.pid = this.productId;
     this.orderRequestModel.quantity = quantity;
 
     if (bankSlip != "") {
@@ -159,45 +89,16 @@ export class ResellProductsComponent implements OnInit {
     }
 
     this.spinner.show();
-    this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
+    this.orderService.placeOrderByCart(this.orderRequestModel).subscribe((resp: any) => {
 
       if (resp.code === 1) {
         this.tostr.success("Place New Order", "Order Place Successfully.");
+        location.reload();
       } else {
         this.tostr.error("Place New Order", resp.message);
       }
 
       this.spinner.hide();
-    })
-  }
-
-  initPlaceOrderForm() {
-    this.placeOrderForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      district: ['', Validators.required],
-      firstContact: ['', Validators.required],
-      secondContact: ['', Validators.required],
-      paymentMethod: ['', Validators.required],
-      quantity: ['', Validators.required],
-      bankSlip: ['', Validators.required]
-    })
-  }
-
-  loadResellProductList() {
-
-    this.requestParamModel.token = sessionStorage.getItem("authToken");
-    
-    this.resellService.getResellProductList(this.requestParamModel).subscribe((resp: any) => {
-
-      const dataList = JSON.parse(JSON.stringify(resp));
-
-      if (resp.code === 1) {
-        dataList.data[0].forEach((eachProduct: ResellProduct, index: any) => {
-          this.resellProductList.push(eachProduct);
-        })
-      }
     })
   }
 
@@ -219,6 +120,39 @@ export class ResellProductsComponent implements OnInit {
       // Read the image file as a Data URL
       reader.readAsDataURL(file);
     });
+  }
+
+  initPlaceOrderForm() {
+    this.placeOrderForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      district: ['', Validators.required],
+      firstContact: ['', Validators.required],
+      secondContact: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
+      quantity: ['', Validators.required],
+      bankSlip: ['', Validators.required]
+    })
+  }
+
+  loadCartItemList() {
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+
+    this.productService.getCartItemList(this.requestParamModel).subscribe((resp: any) => {
+
+      const dataList = JSON.parse(JSON.stringify(resp));
+
+      if (resp.code === 1) {
+        dataList.data.forEach((eachData: CartItem, index: any) => {
+          const dataObj: any = eachData;
+          this.cartItemList.push(dataObj[index]);
+          console.log(dataList.data[0])
+        })
+
+        this.cartItemModel.totalAmount = dataList.data[0].totalAmount;
+      }
+    })
   }
 
 }

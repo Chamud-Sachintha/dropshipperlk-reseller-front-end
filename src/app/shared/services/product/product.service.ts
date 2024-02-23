@@ -19,4 +19,19 @@ export class ProductService {
     const path = environment.apiURL + "get-product-info";
     return this.http.post(path, requestParamModel);
   }
+
+  addToCart(requestParamModel: Request) {
+    const path = environment.apiURL + "add-to-cart";
+    return this.http.post(path, requestParamModel);
+  }
+
+  getCartItemsCount(requestParamModel: Request) {
+    const path = environment.apiURL + "get-cart-items-count";
+    return this.http.post(path, requestParamModel);
+  }
+
+  getCartItemList(requestParamModel: Request) {
+    const path = environment.apiURL + "get-cart-items-list";
+    return this.http.post(path, requestParamModel);
+  }
 }
