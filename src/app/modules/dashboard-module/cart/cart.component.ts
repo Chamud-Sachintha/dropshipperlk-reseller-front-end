@@ -144,12 +144,20 @@ export class CartComponent implements OnInit {
       const dataList = JSON.parse(JSON.stringify(resp));
 
       if (resp.code === 1) {
-        dataList.data.forEach((eachData: CartItem, index: any) => {
-          const dataObj: any = eachData;
-          this.cartItemList.push(dataObj[index]);
+        dataList.data[0].forEach((eachData: CartItem, index: any) => {
+          // const dataObj: any = eachData;
+          this.cartItemList.push(eachData);
           console.log(dataList.data[0])
         })
 
+        // this.cartItemModel.totalAmount = dataList.data[0].totalAmount;
+      }
+    })
+
+    this.orderService.getCartTotal(this.requestParamModel).subscribe((resp: any) => {
+      const dataList = JSON.parse(JSON.stringify(resp))
+
+      if (resp.code === 1) {
         this.cartItemModel.totalAmount = dataList.data[0].totalAmount;
       }
     })

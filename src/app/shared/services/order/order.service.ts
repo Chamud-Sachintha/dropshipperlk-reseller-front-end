@@ -35,4 +35,9 @@ export class OrderService {
     const path = environment.apiURL + "place-order-by-cart";
     return this.http.post(path, orderRequestModel);
   }
+
+  getCartTotal(requestParamModel: Request) {
+    const path = environment.apiURL + "get-cart-total";
+    return this.http.post(path, requestParamModel);
+  }
 }
