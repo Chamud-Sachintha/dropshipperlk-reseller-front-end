@@ -8,4 +8,5 @@ export class Request {
     orderNumber!: string;
     productId!: string;
     quantity!: string;
+    CardRID! :string;
 }

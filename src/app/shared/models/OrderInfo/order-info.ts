@@ -8,4 +8,6 @@ export class OrderInfo {
     paymentStatus!: string;
     orderStatus!: string;
     orderPlaceDate!: string;
+    TrackingNumber!: string;
+    courierName!:  string;
 }

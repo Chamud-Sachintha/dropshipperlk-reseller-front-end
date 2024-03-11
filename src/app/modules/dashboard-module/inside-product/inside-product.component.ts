@@ -98,6 +98,18 @@ export class InsideProductComponent implements OnInit {
         this.productInfoModel.isResell = dataList.data[0].isResell;
         this.productInfoModel.in_colombo_charges = dataList.data[0].in_colombo_charges;
         this.productInfoModel.out_of_colombo_charges = dataList.data[0].out_of_colombo_charges;
+        let productWeight = dataList.data[0].productWeigth;
+
+        // Check if the weight is greater than or equal to 1000
+        if (productWeight >= 1000) {
+          // Convert to kilograms (Kg)
+          productWeight = productWeight / 1000;
+          this.productInfoModel.weigth =productWeight+"Kg";
+        } else {
+          this.productInfoModel.weigth =productWeight+"g";
+        }
+        
+        this.productInfoModel.Stock = dataList.data[0].Stock;
         this.productInfoModel.image1 = environment.fileServer + "images/" + dataList.data[0].images.image0;
         this.productInfoModel.image2 = environment.fileServer + "images/" + dataList.data[0].images.image1;
         this.productInfoModel.image3 = environment.fileServer + "images/" + dataList.data[0].images.image2;

@@ -10,4 +10,5 @@ export class OrderRequest {
     paymentMethod!: string;
     quantity!: string;
     bankSlip!: string;
+    FinalTotal!: number;
 }

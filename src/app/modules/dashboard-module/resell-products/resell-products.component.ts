@@ -24,6 +24,8 @@ export class ResellProductsComponent implements OnInit {
   orderRequestModel = new OrderRequest();
   resellProductList: ResellProduct[] = [];
   productId!: string;
+  searchTerm: string = '';
+  filteredProducts: ResellProduct[] = [];
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
@@ -32,6 +34,7 @@ export class ResellProductsComponent implements OnInit {
   ngOnInit(): void {
     this.loadResellProductList();
     this.initPlaceOrderForm();
+    
     this.initAddProductQuantityForm();
   }
 
@@ -196,6 +199,7 @@ export class ResellProductsComponent implements OnInit {
       if (resp.code === 1) {
         dataList.data[0].forEach((eachProduct: ResellProduct, index: any) => {
           this.resellProductList.push(eachProduct);
+          this.filteredProducts = [...this.resellProductList];
         })
       }
     })
@@ -220,5 +224,16 @@ export class ResellProductsComponent implements OnInit {
       reader.readAsDataURL(file);
     });
   }
+
+  onSearch() {
+    this.filteredProducts = this.resellProductList.filter((product) =>
+      product.productName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      product.categoryName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      String(product.price).toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      product.status.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      String(product.createTime).toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+  
 
 }

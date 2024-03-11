@@ -34,4 +34,8 @@ export class ProductService {
     const path = environment.apiURL + "get-cart-items-list";
     return this.http.post(path, requestParamModel);
   }
+  getProductDeliverInfoById(requestParamModel: Request) {
+    const path = environment.apiURL + "get-productDelivery-info";
+    return this.http.post(path, requestParamModel);
+  }
 }

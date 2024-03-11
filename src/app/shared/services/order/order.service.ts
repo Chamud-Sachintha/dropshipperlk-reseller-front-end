@@ -40,4 +40,11 @@ export class OrderService {
     const path = environment.apiURL + "get-cart-total";
     return this.http.post(path, requestParamModel);
   }
+
+  RemoveCart(requestParamModel: Request)
+  {
+  const path = environment.apiURL + "get-cart-items-list-remove";
+    return this.http.post(path, requestParamModel);
+  }
+
 }

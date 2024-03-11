@@ -27,6 +27,8 @@
                             <thead>
                                 <tr>
                                     <th>Order Number</th>
+                                    <th>Tracking Number</th>
+                                    <th>Courier Name</th>
                                     <!-- <th>Product Name</th>
                                     <th>Product Price</th>
                                     <th>Resell Price</th>
@@ -41,6 +43,8 @@
                             <tbody>
                                 <tr *ngFor="let eachOrder of this.orderInfoList">
                                     <td>{{ eachOrder.orderNumber }}</td>
+                                    <td>{{ eachOrder.TrackingNumber }}</td>
+                                    <td>{{ eachOrder.courierName }}</td>
                                     <!-- <td>{{ eachOrder.productName }}</td>
                                     <td>{{ eachOrder.productPrice }}</td>
                                     <td>{{ eachOrder.resellPrice }}</td>

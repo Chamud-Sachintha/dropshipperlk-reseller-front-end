@@ -94,6 +94,69 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-8">
+                            <h5 class="card-header">Bank Informations</h5>
+                        </div>
+                        <div class="col-3" *ngIf="!BankDetails?.BankName">
+                            <button class="btn btn-primary btn-sm mt-2" style="float: right;" (click)="openEditBankForm()"
+                                data-toggle="modal" data-target="#exampleModal2">Add Bank Information</button>
+                        </div>
+                        
+                        <div class="col-3" *ngIf="BankDetails?.BankName">
+                            <button class="btn btn-primary btn-sm mt-2" style="float: right;" (click)="openEditBankForm()"
+                                data-toggle="modal" data-target="#exampleModal3">Edit Information</button>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-8">
+                        <div class="card mb-8">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Bank Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{ this.BankDetails.BankName }}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Account Number</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{ this.BankDetails.AccountNumber }}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Branch Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{ this.BankDetails.BranchCode }}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{ this.BankDetails.Name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-8">
                             <h5 class="card-header">KYC Informations</h5>
                         </div>
                         <div class="col-3">
@@ -201,3 +264,122 @@
  </div>
 </div>
 <!-- models ends here -->
+
+
+<div
+ class="modal fade"
+ id="exampleModal2"
+ tabindex="-1"
+ role="dialog"
+ aria-labelledby="exampleModalLabel"
+ aria-hidden="true"
+>
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">Bank Information</h5>
+       <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </a>
+     </div>
+     <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
+        <form [formGroup]="BankDetailsForm" (ngSubmit)="onSubmitUpdateBankForm()">
+            <div class="col-12">
+              <label for="">Bank Name</label>
+              <input type="text" class="form-control" formControlName="BankName">
+              <div *ngIf="BankDetailsForm.get('BankName')?.invalid && BankDetailsForm.get('BankName')?.touched">
+                <span class="text-danger">Bank Name is required</span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+              <label for="">Account Number</label>
+              <input type="text" class="form-control" formControlName="AccountNumber">
+              <div *ngIf="BankDetailsForm.get('AccountNumber')?.invalid && BankDetailsForm.get('AccountNumber')?.touched">
+                <span class="text-danger">Invalid Account Number</span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+              <label for="">Branch Name</label>
+              <input type="text" class="form-control" formControlName="BranchName">
+              <div *ngIf="BankDetailsForm.get('BranchName')?.invalid && BankDetailsForm.get('BranchName')?.touched">
+                <span class="text-danger">Branch Name is required</span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+              <label for="">Name</label>
+              <input type="text" class="form-control" formControlName="Name">
+              <div *ngIf="BankDetailsForm.get('Name')?.invalid && BankDetailsForm.get('Name')?.touched">
+                <span class="text-danger">Name is required</span>
+              </div>
+            </div>
+          
+            <div class="col-12 mt-3">
+              <button class="btn btn-primary btn-sm" type="submit">Update</button>
+            </div>
+          </form>
+     </div>
+   </div>
+ </div>
+</div>
+
+<div
+ class="modal fade"
+ id="exampleModal3"
+ tabindex="-1"
+ role="dialog"
+ aria-labelledby="exampleModalLabel"
+ aria-hidden="true"
+>
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">Bank Information Edit</h5>
+       <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </a>
+     </div>
+     <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
+        <form [formGroup]="BankDetailsForm" (ngSubmit)="onSubmitEditBankForm()">
+            <div class="col-12">
+              <label for="">Bank Name</label>
+              <input type="text" class="form-control" formControlName="BankName" value="{{ this.BankDetails.BankName }}">
+              <div *ngIf="BankDetailsForm.get('BankName')?.invalid && BankDetailsForm.get('BankName')?.touched">
+                <span class="text-danger">Bank Name is required</span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+              <label for="">Account Number</label>
+              <input type="text" class="form-control" formControlName="AccountNumber" value="{{ this.BankDetails.AccountNumber }}">
+              <div *ngIf="BankDetailsForm.get('AccountNumber')?.invalid && BankDetailsForm.get('AccountNumber')?.touched">
+                <span class="text-danger">Invalid Account Number</span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+              <label for="">Branch Name</label>
+              <input type="text" class="form-control" formControlName="BranchName" value="{{ this.BankDetails.BranchCode }}">
+              <div *ngIf="BankDetailsForm.get('BranchName')?.invalid && BankDetailsForm.get('BranchName')?.touched">
+                <span class="text-danger">Branch Name is required</span>
+              </div>
+            </div>
+          
+            <div class="col-12">
+              <label for="">Name</label>
+              <input type="text" class="form-control" formControlName="Name" value="{{ this.BankDetails.Name }}">
+              <div *ngIf="BankDetailsForm.get('Name')?.invalid && BankDetailsForm.get('Name')?.touched">
+                <span class="text-danger">Name is required</span>
+              </div>
+            </div>
+          
+            <div class="col-12 mt-3">
+              <button class="btn btn-primary btn-sm" type="submit">Update</button>
+            </div>
+          </form>
+     </div>
+   </div>
+ </div>
+</div>

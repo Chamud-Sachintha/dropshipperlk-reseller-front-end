@@ -1,4 +1,6 @@
 export class Product {
+    weigth!: string;
+    Stock!:string;
     id!: string;
     productName!: string;
     categoryName!: string;

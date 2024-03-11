@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { BankDetails } from 'src/app/shared/models/BankDetails/bank-details';
 import { KYCInfo } from 'src/app/shared/models/KYCInfo/kycinfo';
 import { Profile } from 'src/app/shared/models/Profile/profile';
 import { Request } from 'src/app/shared/models/Request/request';
@@ -16,15 +17,25 @@ import { ProfileService } from 'src/app/shared/services/profile/profile.service'
 export class ProfileComponent implements OnInit {
 
   profileDetailsForm!: FormGroup;
+  BankDetailsForm!: FormGroup;
   kycUploadForm!: FormGroup;
   requestModel = new Request();
   profileModel = new Profile();
+  BankDetails = new BankDetails();
   kycModel = new KYCInfo();
   isProfileModalOpen = false;
   isAddKYCModalOpen = false;
 
   constructor(private profileService: ProfileService, private formBuilder: FormBuilder, private router: Router
-            , private tostr: ToastrService, private spinner: NgxSpinnerService) {}
+            , private tostr: ToastrService, private spinner: NgxSpinnerService, private fb: FormBuilder) {
+
+              this.BankDetailsForm = this.fb.group({
+                BankName: ['', Validators.required],
+                AccountNumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+                BranchName: ['', Validators.required],
+                Name: ['', Validators.required],
+              });
+            }
 
   ngOnInit(): void {
     this.initProfileDetailsForm();
@@ -102,6 +113,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  openEditBankForm() {
+
+   
+  }
+
   getProfileInfo() {
     this.requestModel.token = sessionStorage.getItem("authToken");
     this.requestModel.flag = sessionStorage.getItem("role");
@@ -116,6 +132,10 @@ export class ProfileComponent implements OnInit {
         this.profileModel.address = dataList.data[0].address;
         this.profileModel.phoneNumber = dataList.data[0].phoneNumber;
         this.profileModel.buisnessName = dataList.data[0].buisnessName;
+        this.BankDetails.BankName = dataList.data[0].bank_name;
+        this.BankDetails.AccountNumber = dataList.data[0].account_number;
+        this.BankDetails.Name = dataList.data[0].resellr_name;
+        this.BankDetails.BranchCode = dataList.data[0].branch_code;
       }
     })
   }
@@ -167,6 +187,74 @@ export class ProfileComponent implements OnInit {
 
       // Read the image file as a Data URL
       reader.readAsDataURL(file);
+    });
+  }
+
+  onSubmitUpdateBankForm(){
+
+    if (this.BankDetailsForm.valid) {
+     
+    const BankName = this.BankDetailsForm.value['BankName'];
+    const  AccountNumber = this.BankDetailsForm.value['AccountNumber'] ;
+    const  BranchCode = this.BankDetailsForm.value['BranchName'];
+    const Name = this.BankDetailsForm.value['Name'];
+
+    this.BankDetails.token = sessionStorage.getItem("authToken");
+    this.BankDetails.BankName = BankName;
+    this.BankDetails.AccountNumber = AccountNumber;
+    this.BankDetails.BranchCode = BranchCode;
+    this.BankDetails.Name = Name;
+
+    this.profileService.UpdateBankDeatils(this.BankDetails).subscribe((resp: any) => {
+      if (resp.code === 1) {
+        this.tostr.success("Bank Data Upload Successfully.");
+        window.location.reload();
+      } else {
+        this.tostr.error("Error In Data", resp.message);
+      }   
+    })
+
+    console.log(Name);
+    } else {
+      this.markFormAsTouched(this.BankDetailsForm);
+    }
+    
+    
+
+  }
+  onSubmitEditBankForm(){
+    if (this.BankDetailsForm.valid) {
+     
+      const BankName = this.BankDetailsForm.value['BankName'];
+      const  AccountNumber = this.BankDetailsForm.value['AccountNumber'] ;
+      const  BranchCode = this.BankDetailsForm.value['BranchName'];
+      const Name = this.BankDetailsForm.value['Name'];
+  
+      this.BankDetails.token = sessionStorage.getItem("authToken");
+      this.BankDetails.BankName = BankName;
+      this.BankDetails.AccountNumber = AccountNumber;
+      this.BankDetails.BranchCode = BranchCode;
+      this.BankDetails.Name = Name;
+  
+      this.profileService.UpdateEditBankDeatils(this.BankDetails).subscribe((resp: any) => {
+        if (resp.code === 1) {
+          this.tostr.success("Bank Data Upload Successfully.");
+          window.location.reload();
+        } else {
+          this.tostr.error("Error In Data", resp.message);
+        }   
+      })
+  
+      console.log(Name);
+      } else {
+        this.markFormAsTouched(this.BankDetailsForm);
+      }
+      
+  }
+
+  markFormAsTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
     });
   }
 

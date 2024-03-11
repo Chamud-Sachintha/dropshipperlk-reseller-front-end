@@ -50,7 +50,7 @@
                                     <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">{{ eachProduct.categoryName }}</a></li>
                                 </ul>
         
-                                <p class="mb-3">{{ this.eachProduct.description }} </p>
+                                <p class="mb-3" [innerHTML]="this.eachProduct.description"> </p>
         
                                 <ul class="list-inline list-inline-dotted mb-0">
                                     <li class="list-inline-item">All items from <a href="#" data-abc="true">dropshipper.lk</a>

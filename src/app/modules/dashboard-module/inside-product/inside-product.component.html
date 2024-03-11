@@ -33,7 +33,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <p>{{ this.productInfoModel.description }}</p>
+                                <p [innerHTML]="this.productInfoModel.description"></p>
                             </div>
                         </div>
                         <div class="row">
@@ -46,6 +46,28 @@
                                 <label for="">Product Status</label>
                                 <p *ngIf="this.productInfoModel.inStock" style="font-weight: bolder; color: green; margin-top: 10px;">Available</p>
                                 <p *ngIf="!this.productInfoModel.inStock" style="font-weight: bolder; color: red; margin-top: 10px;">Not Available</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="">Team Commision</label>
+                                <h2>{{this.productInfoModel.teamCommision}}%</h2>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-4">
+                                <label for="">Direct Commision</label>
+                                <h2>{{this.productInfoModel.directCommision}}%</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="">Package Weigth</label>
+                                <h2>{{this.productInfoModel.weigth}}</h2>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-4">
+                                <label for="">Stock Count</label>
+                                <h2>{{this.productInfoModel.Stock}}</h2>
                             </div>
                         </div>
                         <div class="row mt-3">
