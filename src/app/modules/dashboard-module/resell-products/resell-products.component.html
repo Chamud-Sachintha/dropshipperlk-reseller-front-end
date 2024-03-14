@@ -106,6 +106,7 @@
                 </a>
             </div>
             <form [formGroup]="this.placeOrderForm" (ngSubmit)="onSubmitPlaceOrder()">
+                
                 <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
                     <div class="row">
                         <div class="col-12">
@@ -118,6 +119,30 @@
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">City</label>
+                            <select class="form-control" formControlName="location" (change)="onLocationChange($event)">
+                                
+                                
+                                <option value="Colombo-01">Colombo 01 - Colombo Fort</option>
+                                <option value="Colombo-02">Colombo 02 - Slave Island</option>
+                                <option value="Colombo-03">Colombo 03 - Kollupitiya</option>
+                                <option value="Colombo-04">Colombo 04 - Bambalapitiya</option>
+                                <option value="Colombo-05">Colombo 05 - Narahenpita</option>
+                                <option value="Colombo-06">Colombo 06 - Wellawatta</option>
+                                <option value="Colombo-07">Colombo 07 - Kurunduwatta</option>
+                                <option value="Colombo-08">Colombo 08 - Borella</option>
+                                <option value="Colombo-09">Colombo 09 - Dematagoda</option>
+                                <option value="Colombo-10">Colombo 10 - Maradana</option>
+                                <option value="Colombo-11">Colombo 11 - Pettah</option>
+                                <option value="Colombo-12">Colombo 12 - Aluthkade</option>
+                                <option value="Colombo-13">Colombo 13 - Kotahena</option>
+                                <option value="Colombo-14">Colombo 14 - Grandpass</option>
+                                <option value="Colombo-15">Colombo 15 - Mattakkuliya</option>
+                                <option value="outOfColombo">Out of Colombo</option>
+                            </select>
+                            
+                        </div>
+                        <div class="col-12 mt-3" *ngIf="placeOrderForm.controls['location'].value === 'outOfColombo'">
+                            <label for="city">City</label>
                             <input type="text" class="form-control" formControlName="city">
                         </div>
                         <div class="col-12 mt-3">
@@ -126,16 +151,32 @@
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">Contact No 1</label>
-                            <input type="text" class="form-control" formControlName="firstContact">
+                            <input type="text" class="form-control" formControlName="firstContact" maxlength="10">
+                            <div *ngIf="placeOrderForm.get('firstContact')?.hasError('pattern')" style="color: red;">
+                                Only numbers are allowed.
+                            </div>
+                            <div *ngIf="placeOrderForm.get('firstContact')?.hasError('maxLength')" style="color: red;">
+                                Maximum length is 10 characters.
+                            </div>
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">Contact No 2</label>
-                            <input type="text" class="form-control" formControlName="secondContact">
+                            <input type="text" class="form-control" formControlName="secondContact" maxlength="10">
+                            <div *ngIf="placeOrderForm.get('secondContact')?.hasError('pattern')" style="color: red;">
+                                Only numbers are allowed.
+                            </div>
+                            <div *ngIf="placeOrderForm.get('secondContact')?.hasError('maxLength')" style="color: red;">
+                                Maximum length is 10 characters.
+                            </div>
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">Quantity</label>
                             <input type="text" class="form-control" formControlName="quantity">
+                            <div *ngIf="placeOrderForm.get('quantity')?.hasError('pattern')" style="color: red;">
+                                Only numbers are allowed.
+                            </div>
                         </div>
+
                         <div class="col-12 mt-3">
                             <label for="">Payment Method</label>
                             <select name="" id="" class="form-control" #paymentMethod formControlName="paymentMethod">
@@ -145,10 +186,27 @@
                                 <option value="3">KOKO Payment</option>
                             </select>
                         </div>
-                        <div class="col-12 mt-3" *ngIf="paymentMethod.value == '1'">
+                        <div class="col-12 mt-4" *ngIf="paymentMethod.value == '1'">
                             <label for="">Bank Slip</label>
                             <input type="file" class="form-control" (change)="onChangeBankSlip($event)">
                         </div>
+                        
+                        <div class="col-12">
+                            <h5 class=" mt-2">Delivery Charges</h5>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="">In Colombo Fees</label>
+                                    <h5>LKR {{ this.productInfoModel.in_colombo_charges }} .00</h5>
+                                </div>
+            
+                                <div class="col-6">
+                                    <label for="">Out of Colombo Fees</label>
+                                    <h5>LKR {{ this.productInfoModel.out_of_colombo_charges }} .00</h5>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <h5 class="card-header" style="float: right;">Total Amount: LKR. {{ this.cartItemModel.FinaltotalAmount }} .00</h5>
                     </div>
                 </div>
                 <div class="modal-footer">
