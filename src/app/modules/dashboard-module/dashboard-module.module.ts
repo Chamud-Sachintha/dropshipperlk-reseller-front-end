@@ -15,6 +15,7 @@ import { ProfitLogComponent } from './profit-log/profit-log.component';
 import { MyTeamComponent } from './my-team/my-team.component';
 import { SessionInfoComponent } from './session-info/session-info.component';
 import { CartComponent } from './cart/cart.component';
+import { HeaderBannerComponent } from './header-banner/header-banner.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CartComponent } from './cart/cart.component';
     ProfitLogComponent,
     MyTeamComponent,
     SessionInfoComponent,
-    CartComponent
+    CartComponent,
+    HeaderBannerComponent
   ],
   imports: [
     CommonModule,
