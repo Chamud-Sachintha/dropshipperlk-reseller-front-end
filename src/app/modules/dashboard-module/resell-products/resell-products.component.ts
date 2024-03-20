@@ -30,6 +30,7 @@ export class ResellProductsComponent implements OnInit {
   cartItemModel = new CartItem();
   cartItemList: CartItem[] = [];
   productInfoModel = new Product();
+  cartItemsCount: string='';
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
@@ -38,7 +39,7 @@ export class ResellProductsComponent implements OnInit {
   ngOnInit(): void {
     this.loadResellProductList();
     this.initPlaceOrderForm();
-    
+    this.getcartcount();
     this.initAddProductQuantityForm();
     this.placeOrderForm = this.fb.group({
       location: ['colombo', Validators.required],
@@ -232,6 +233,26 @@ export class ResellProductsComponent implements OnInit {
         })
       }
     })
+  }
+
+  getcartcount(){
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+    
+    this.resellService.getResellProductCartCount(this.requestParamModel).subscribe((resp: any) => {
+
+      const dataList = JSON.parse(JSON.stringify(resp));
+
+      if (resp.code === 1) {
+       
+        this.cartItemsCount =  resp.data[0]['cartItemsCount'];;
+        console.log('conut', this.cartItemsCount);    
+      }
+    })
+  }
+
+  goToCart() {
+    console.log('Navigating to cart...'); // Add this line for debugging
+    this.router.navigate(['/app/cart']);
   }
 
   convertImageToBase64(fileInput: any): Promise<string> {
