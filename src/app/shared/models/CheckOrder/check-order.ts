@@ -1,4 +1,8 @@
 export class CheckOrder {
+    name!: string;
+    address!: string;
+    contact_1!: string;
+    contact_2!: string;
     productName!: string;
     quantity!: string;
     totalAmount!: string;

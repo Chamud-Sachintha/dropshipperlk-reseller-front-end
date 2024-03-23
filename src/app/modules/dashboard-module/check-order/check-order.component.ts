@@ -61,6 +61,7 @@ export class CheckOrderComponent implements OnInit {
         dataList.data.forEach((eachData: OrderInfo, index: any) => {
           const dataObj: any = eachData;
           this.orderItemList.push(dataObj[index])
+          
         })
         // this.orderInfoModel.productName = dataList.data[0].productName;
         // this.orderInfoModel.quantity = dataList.data[0].quantity;
@@ -71,6 +72,12 @@ export class CheckOrderComponent implements OnInit {
         this.orderInfoModel.teamCommision = dataList.data[0].teamCommision;
         this.orderInfoModel.directCommision = dataList.data[0].directCommision;
         this.orderInfoModel.orderCancled = dataList.data[0].orderCancled;
+        this.orderInfoModel.name = dataList.data[0].resellname;
+        this.orderInfoModel.address = dataList.data[0].reselladdress;
+        this.orderInfoModel.contact_1 = dataList.data[0].resellcontact_1;
+        this.orderInfoModel.contact_2 = dataList.data[0].resellcontact_2;
+       
+       // console.log('name',this.orderInfoModel.name)
         // this.orderInfoModel.image1 = environment.fileServer + "images/" + dataList.data[0].images.image0;
         // this.orderInfoModel.image2 = environment.fileServer + "images/" + dataList.data[0].images.image1;
         // this.orderInfoModel.image3 = environment.fileServer + "images/" + dataList.data[0].images.image2;

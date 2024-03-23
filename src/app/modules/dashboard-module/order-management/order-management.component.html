@@ -2,8 +2,8 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Order List</h5>
-
+            <h5 class="card-header">Order List <label style="margin-left: 790px;" >Searche Orders:</label> &nbsp; <input type="text" style="width: 140px;" [(ngModel)]="searchText" (input)="filterOrderRequestList()"></h5>
+            
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="table-responsive">
@@ -25,7 +25,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let eachOrder of this.orderInfoList">
+                                <tr *ngFor="let eachOrder of filteredOrderRequestList; index as i">
                                     <td>{{ eachOrder.orderNumber }}</td>
                                     <td>{{ eachOrder.TrackingNumber }}</td>
                                     <td>{{ eachOrder.courierName }}</td>

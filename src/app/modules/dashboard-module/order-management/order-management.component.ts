@@ -13,11 +13,28 @@ export class OrderManagementComponent implements OnInit {
 
   requestParamModel = new Request();
   orderInfoList: OrderInfo[] = [];
+  searchText = '';
+  filteredOrderRequestList: OrderInfo[] = [];
+
 
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrderList();
+    this.filteredOrderRequestList = this.orderInfoList; 
+  }
+
+  filterOrderRequestList() {
+    if (!this.searchText) {
+      this.filteredOrderRequestList = this.orderInfoList; // Reset to the original data if search text is empty
+    } else {
+      const searchTextLower = this.searchText.toLowerCase();
+      this.filteredOrderRequestList = this.orderInfoList.filter(order =>
+        Object.values(order).some(value =>
+          value ? value.toString().toLowerCase().includes(searchTextLower) : false
+        )
+      );
+    }
   }
 
   onClickCheckOrder(orderNumber: string) {
