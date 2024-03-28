@@ -15,6 +15,11 @@ export class ProductService {
     return this.http.post(path, requestModel);
   }
 
+  getAllProductIdList(requestModel: Request, ) {
+    const path = environment.apiURL + "get-CId-products";
+    return this.http.post(path, requestModel);
+  }
+
   getProductInfoById(requestParamModel: Request) {
     const path = environment.apiURL + "get-product-info";
     return this.http.post(path, requestParamModel);

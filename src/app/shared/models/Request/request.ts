@@ -9,4 +9,5 @@ export class Request {
     productId!: string;
     quantity!: string;
     CardRID! :string;
+    Cid! : any;
 }

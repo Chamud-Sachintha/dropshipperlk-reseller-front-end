@@ -14,6 +14,9 @@ export class AllProductsComponent implements OnInit {
 
   requestParamModel = new Request();
   productList: Product[] = [];
+  categoryList: any[] = [];
+  selectedCategory: number | null = null;
+  filteredProductList: any[] = [];
 
   constructor (private productService: ProductService, private router: Router) {}
 
@@ -32,16 +35,47 @@ export class AllProductsComponent implements OnInit {
     this.productService.getAllProductList(this.requestParamModel).subscribe((resp: any) => {
 
       const dataList = JSON.parse(JSON.stringify(resp));
-
+      console.log('sd',resp.token);
+      this.categoryList = resp.token;
       if (resp.code === 1) {
         dataList.data[0].forEach((eachProduct: Product) => {
           const thumbnailImageUrl = environment.fileServer + "images/" + eachProduct.images;
           eachProduct.images = thumbnailImageUrl;
-
+         
           this.productList.push(eachProduct);
         })
       }
     })
+  }
+
+  filterProductsByCategory() {
+    console.log('filtering by ' + this.selectedCategory);
+    if(this.selectedCategory == 99)
+    {
+
+    }
+    else if(this.selectedCategory == 0){
+      this.loadAllProductList();
+    }
+    else{
+      this.requestParamModel.token = sessionStorage.getItem("authToken");
+      this.requestParamModel.Cid = this.selectedCategory;
+    
+      this.productService.getAllProductIdList(this.requestParamModel).subscribe((resp: any) => {
+        const dataList = JSON.parse(JSON.stringify(resp));
+        console.log('sd', resp.token);
+        this.categoryList = resp.token;
+        if (resp.code === 1) {
+          this.productList = []; // Reset productList array before loading new filtered data
+          dataList.data[0].forEach((eachProduct: Product) => {
+            const thumbnailImageUrl = environment.fileServer + "images/" + eachProduct.images;
+            eachProduct.images = thumbnailImageUrl;
+            this.productList.push(eachProduct);
+          });
+        }
+      });
+    }
+    
   }
 
 }
