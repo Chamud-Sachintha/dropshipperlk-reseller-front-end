@@ -196,6 +196,8 @@ export class ResellProductsComponent implements OnInit {
 
       if (resp.code === 1) {
         this.tostr.success("Place New Order", "Order Place Successfully.");
+        this.placeOrderForm.reset();
+        window.location.reload();
       } else {
         this.tostr.error("Place New Order", resp.message);
       }

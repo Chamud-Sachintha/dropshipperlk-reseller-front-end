@@ -78,4 +78,13 @@ export class AllProductsComponent implements OnInit {
     
   }
 
+  calculateCardHeight(eachProduct: any): number {
+   
+    const cardHeaderHeight = 60; 
+    const cardFooterHeight = 50; 
+    const imageHeight = 200; 
+   
+    return cardHeaderHeight + imageHeight + cardFooterHeight;
+  }
+
 }

@@ -5,7 +5,7 @@ export class Product {
     productName!: string;
     categoryName!: string;
     description!: string;
-    inStock!: boolean;
+    inStock!: string;
     price!: string;
     teamCommision!: string;
     directCommision!: string;
