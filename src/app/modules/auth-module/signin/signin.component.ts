@@ -54,7 +54,7 @@ export class SigninComponent implements OnInit {
           this.tostr.success("User Authentication", "Login Sucess");
           this.router.navigate(['app/profile']);
         } else {
-          this.tostr.success("User Authentication", resp.message);
+          this.tostr.error("User Authentication wrong", resp.message);
         }
 
         this.spinner.hide();

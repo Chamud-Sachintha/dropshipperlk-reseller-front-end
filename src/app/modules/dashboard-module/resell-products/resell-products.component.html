@@ -29,27 +29,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let eachProduct of filteredProducts; index as i">
+                                <tr *ngFor="let eachProduct of filteredProducts | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; index as i">
                                     <td>{{ i + 1 }}</td>
                                     <td>{{ eachProduct.productName }}</td>
                                     <td>{{ eachProduct.categoryName }}</td>
                                     <td [innerHTML]="eachProduct.description"></td>
-                                    <td>{{ eachProduct.price }} .00</td>
-                                    <td>{{ eachProduct.resellPrice }} .00</td>
+                                    <td>LKR.{{ eachProduct.price }} </td>
+                                    <td>LKR.{{ eachProduct.resellPrice }}</td>
                                     <td>{{ eachProduct.status }}</td>
                                     <td>{{ eachProduct.resellTime }}</td>
                                     <td style="width: 150px;">
                                         <div class="row text-center">
-                                            <div class="col-12">
+                                            <div class="col-12" *ngIf="eachProduct.Pstatus == 1">
                                                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal2" style="width: 150px;" (click)="onClickAddtoCart(eachProduct.productId)">Add to Cart</button>
                                             </div>
-                                            <div class="col-12 mt-2">
+                                            <div class="col-12 mt-2" *ngIf="eachProduct.Pstatus == 1">
                                                 <button class="btn btn-success btn-sm" style="width: 150px;"
                                                     data-toggle="modal" data-target="#exampleModal" (click)="setProductId(eachProduct.productId)">Place Order</button>
+                                            </div>
+                                            <div class="col-12 mt-2" *ngIf="eachProduct.Pstatus != 1">
+                                                <p  style="font-weight: bolder; color: red; margin-top: 10px;">OUT OF STOCK</p>
                                             </div>
                                             <div class="col-12 mt-2">
                                                 <button class="btn btn-primary btn-sm" style="width: 150px;" (click)="onClickCheckProduct(eachProduct.productId)">Check
                                                     Product</button>
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <button class="btn btn-warning btn-sm" style="width: 150px;" data-toggle="modal" data-target="#UpdatePrice" (click)="onClickupdateProduct(eachProduct.productId)">Price
+                                                    Upate</button>
                                             </div>
                                             <div class="col-12 mt-2">
                                                 <button class="btn btn-danger btn-sm" style="width: 150px;" (click)="removeResellProduct(eachProduct.productId)">Remove</button>
@@ -72,6 +79,7 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
                     </div>
                 </div>
             </div>
@@ -102,7 +110,7 @@
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">City</label>
-                            <select class="form-control" formControlName="location" (change)="onLocationChange($event)">
+                            <select class="form-control" formControlName="location" >
                                 
                                 
                                 <option value="Colombo-01">Colombo 01 - Colombo Fort</option>
@@ -154,7 +162,7 @@
                         </div>
                         <div class="col-12 mt-3">
                             <label for="">Quantity</label>
-                            <input type="text" class="form-control" formControlName="quantity">
+                            <input type="text" class="form-control" formControlName="quantity" (change)="onLocationChange($event)">
                             <div *ngIf="placeOrderForm.get('quantity')?.hasError('pattern')" style="color: red;">
                                 Only numbers are allowed.
                             </div>
@@ -162,7 +170,7 @@
 
                         <div class="col-12 mt-3">
                             <label for="">Payment Method</label>
-                            <select name="" id="" class="form-control" #paymentMethod formControlName="paymentMethod">
+                            <select name="" id="" class="form-control" #paymentMethod formControlName="paymentMethod" >
                                 <option value="">-- Select Payment Method</option>
                                 <option value="1">Bank Deposit</option>
                                 <option value="2">Cash On Delivery</option>
@@ -171,7 +179,7 @@
                         </div>
                         <div class="col-12 mt-4" *ngIf="paymentMethod.value == '1'">
                             <label for="">Bank Slip</label>
-                            <input type="file" class="form-control" (change)="onChangeBankSlip($event)">
+                            <input type="file" class="form-control" formControlName="bankSlip" (change)="onChangeBankSlip($event)">
                         </div>
                         
                         <div class="col-12">
@@ -229,6 +237,34 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="UpdatePrice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Resell Price Update</h5>
+                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
+                <form [formGroup]="this.priceupdateform" (ngSubmit)="onClickupdateProductApi()">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="">Enter New Price</label>
+                           
+                            <input type="text" class="form-control" formControlName="URprice">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>$(document).ready(function() {
     $('#example').DataTable();
   });</script>

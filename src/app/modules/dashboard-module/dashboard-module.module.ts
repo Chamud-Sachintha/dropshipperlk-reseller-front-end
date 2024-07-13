@@ -16,6 +16,7 @@ import { MyTeamComponent } from './my-team/my-team.component';
 import { SessionInfoComponent } from './session-info/session-info.component';
 import { CartComponent } from './cart/cart.component';
 import { HeaderBannerComponent } from './header-banner/header-banner.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { HeaderBannerComponent } from './header-banner/header-banner.component';
     DashboardModuleRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class DashboardModuleModule { }

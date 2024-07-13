@@ -7,7 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -20,6 +20,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+    NgxPaginationModule
   ]
 })
 export class AuthModuleModule { }

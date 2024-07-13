@@ -13,9 +13,18 @@ export class ProfitLogComponent implements OnInit {
   requestParamModel = new Request();
   profitLogDataList: ProfitLog[] = [];
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 100;
+
   constructor(private profitLogService: ProfitLogService) {}
 
   ngOnInit(): void {
+    this.loadProfitLogList();
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage = event;
     this.loadProfitLogList();
   }
 

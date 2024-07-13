@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                            <tbody>
-                            <tr *ngFor="let eachData of this.profitLogDataList; index as i">
+                            <tr *ngFor="let eachData of this.profitLogDataList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; index as i">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ eachData.orderNumber }}</td>
                                 <td>{{ eachData.productName }}</td>
@@ -54,6 +54,7 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
                     </div>
                 </div>
             </div>

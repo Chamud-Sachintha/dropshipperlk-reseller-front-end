@@ -12,5 +12,6 @@ export class ResellProduct {
     resellTime!: string;
     resellPrice!: string;
     status!: string;
+    Pstatus!: number;
     cartItemsCount!: string;
 }

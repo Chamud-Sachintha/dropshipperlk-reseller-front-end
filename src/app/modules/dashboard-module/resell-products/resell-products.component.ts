@@ -31,6 +31,13 @@ export class ResellProductsComponent implements OnInit {
   cartItemList: CartItem[] = [];
   productInfoModel = new Product();
   cartItemsCount: string='';
+  Updateprice!: any;
+  priceupdateform!: FormGroup;
+
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 100;
+
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
@@ -41,6 +48,9 @@ export class ResellProductsComponent implements OnInit {
     this.initPlaceOrderForm();
     this.getcartcount();
     this.initAddProductQuantityForm();
+    this.priceupdateform = this.fb.group({
+      URprice: [''] 
+    });
     this.placeOrderForm = this.fb.group({
       location: ['colombo', Validators.required],
       city: [''] ,
@@ -51,7 +61,13 @@ export class ResellProductsComponent implements OnInit {
       name: [''],
       address: [''],
       district: [''],
+      bankSlip:[''],
     });
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage = event;
+    this.loadResellProductList();
   }
 
   removeResellProduct(productId: string) {
@@ -146,7 +162,7 @@ export class ResellProductsComponent implements OnInit {
     const quantity = this.placeOrderForm.controls['quantity']?.value;
     const bankSlip = this.placeOrderForm.controls['bankSlip']?.value;
     const FinalTotal = this.cartItemModel.FinaltotalAmount;
-    console.log("data list",name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal)
+    console.log("data list",name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, bankSlip);
     if (!name) {
         this.tostr.error("Empty Field Found", "Name is required");
     } else if (!address) {
@@ -163,14 +179,17 @@ export class ResellProductsComponent implements OnInit {
         this.tostr.error("Empty Field Found", "Payment Method is required");
     } else {
         if (bankSlip) {
+
+          
             this.convertImageToBase64(bankSlip).then((base64String) => {
-              
+              console.log('slip part' + base64String)
                  this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);
             })
         } else {
          
             this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal);
         }
+        
     }
   }
 
@@ -190,7 +209,7 @@ export class ResellProductsComponent implements OnInit {
     if (bankSlip != "") {
       this.orderRequestModel.bankSlip = bankSlip;
     }
-
+console.log('bankslip' + bankSlip);
     this.spinner.show();
     this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
 
@@ -322,19 +341,22 @@ export class ResellProductsComponent implements OnInit {
   onLocationChange(event: any) {
     const selectedValue = event.target.value;
     
-    
+    const location = this.placeOrderForm.controls['location']?.value;
     const cityControl = this.placeOrderForm.get('city');
-    
+    const Quantity = this.placeOrderForm.get('quantity');
+    const QuantityValue = Quantity?.value;
+    console.log("Selected location: ", location);
     if (cityControl) {
-        if (selectedValue === 'outOfColombo') {
+        if (location === 'outOfColombo') {
           console.log("Selected Value: ", selectedValue);
             cityControl.enable();
            
 
             const totalAmount = parseFloat(this.cartItemModel.totalAmount);
             const outOfColomboCharges = parseFloat(this.productInfoModel.out_of_colombo_charges);
-
-            const fullTotal = totalAmount + outOfColomboCharges;
+            const totalqunity = parseFloat(QuantityValue);
+            const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
+           
             this.cartItemModel.FinaltotalAmount = fullTotal;
             console.log("fisnl Value: ", fullTotal);
            
@@ -342,9 +364,10 @@ export class ResellProductsComponent implements OnInit {
             cityControl.disable();
             cityControl.setValue(''); 
             const totalAmount = parseFloat(this.cartItemModel.totalAmount);
+            const totalqunity = parseFloat(QuantityValue);
             const outOfColomboCharges = parseFloat(this.productInfoModel.in_colombo_charges);
 
-            const fullTotal = totalAmount + outOfColomboCharges;
+            const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
             this.cartItemModel.FinaltotalAmount = fullTotal;
             console.log("in Value: ", fullTotal);
         }
@@ -355,6 +378,38 @@ export class ResellProductsComponent implements OnInit {
   isOutOfColombo() {
      const locationControl = this.placeOrderForm.get('location');
     return locationControl?.value === 'outOfColombo';
+  }
+
+  onClickupdateProduct(productId: string)
+  {
+    this.Updateprice = productId;
+    /*this.requestParamModel.token = sessionStorage.getItem("authToken");
+    this.requestParamModel.productId = productId;
+
+    this.resellService.updateResellPrice(this.requestParamModel).subscribe((resp: any) => {
+      if (resp.code === 1) {
+        this.tostr.success("Remove Product From List", "Remove Successfully.");
+      } else {
+        this.tostr.error("Remove Product From List", resp.message);
+      }
+    })*/
+  }
+
+  onClickupdateProductApi(){
+
+    //console.log('data update>>>>>>',this.priceupdateform.controls['URprice'].value);
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+    this.requestParamModel.productId = this.Updateprice;
+    this.requestParamModel.URprice = this.priceupdateform.controls['URprice'].value;
+
+    this.resellService.updateResellPrice(this.requestParamModel).subscribe((resp: any) => {
+      if (resp.code === 1) {
+        this.tostr.success("Product From List", "Update Successfully.");
+        window.location.reload();
+      } else {
+        this.tostr.error("Product From List", resp.message);
+      }
+    })
   }
   
 

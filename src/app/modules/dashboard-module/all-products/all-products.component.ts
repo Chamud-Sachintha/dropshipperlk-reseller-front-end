@@ -16,11 +16,23 @@ export class AllProductsComponent implements OnInit {
   productList: Product[] = [];
   categoryList: any[] = [];
   selectedCategory: number | null = null;
-  filteredProductList: any[] = [];
+  filteredProducts: Product[] = []; 
+  searchText: string = '';
+  uniqueCategories: string[] = [];
+
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 100;
 
   constructor (private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
+    this.loadAllProductList();
+   
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage = event;
     this.loadAllProductList();
   }
 
@@ -43,16 +55,22 @@ export class AllProductsComponent implements OnInit {
           eachProduct.images = thumbnailImageUrl;
          
           this.productList.push(eachProduct);
+          this.filteredProducts.push(eachProduct);
+          
+          
         })
       }
     })
   }
 
-  filterProductsByCategory() {
+  
+
+  filterByCategory() {
+    this.filteredProducts=[];
     console.log('filtering by ' + this.selectedCategory);
     if(this.selectedCategory == 99)
     {
-
+      this.loadAllProductList();
     }
     else if(this.selectedCategory == 0){
       this.loadAllProductList();
@@ -66,11 +84,12 @@ export class AllProductsComponent implements OnInit {
         console.log('sd', resp.token);
         this.categoryList = resp.token;
         if (resp.code === 1) {
-          this.productList = []; // Reset productList array before loading new filtered data
+          this.productList = []; 
           dataList.data[0].forEach((eachProduct: Product) => {
             const thumbnailImageUrl = environment.fileServer + "images/" + eachProduct.images;
             eachProduct.images = thumbnailImageUrl;
-            this.productList.push(eachProduct);
+            //this.productList.push(eachProduct);
+            this.filteredProducts.push(eachProduct);
           });
         }
       });
@@ -85,6 +104,12 @@ export class AllProductsComponent implements OnInit {
     const imageHeight = 200; 
    
     return cardHeaderHeight + imageHeight + cardFooterHeight;
+  }
+
+  filterProductsByName() {
+    this.filteredProducts = this.productList.filter(product =>
+      product.productName.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 
 }

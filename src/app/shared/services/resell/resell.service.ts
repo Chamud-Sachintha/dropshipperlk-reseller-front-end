@@ -28,4 +28,9 @@ export class ResellService {
     const path = environment.apiURL + "remove-product-from-list";
     return this.http.post(path, requestParamModel);
   }
+
+  updateResellPrice(requestParamModel: Request) {
+    const path = environment.apiURL + "update-product-from-price";
+    return this.http.post(path, requestParamModel);
+  }
 }

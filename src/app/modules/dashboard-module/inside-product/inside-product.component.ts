@@ -96,6 +96,8 @@ export class InsideProductComponent implements OnInit {
         this.productInfoModel.categoryName = dataList.data[0].cetagoryName;
         this.productInfoModel.inStock = dataList.data[0].StockStatus;
         this.productInfoModel.isResell = dataList.data[0].isResell;
+        this.productInfoModel.is_store_pick = dataList.data[0].is_store_pick;
+        this.productInfoModel.waranty = dataList.data[0].waranty;
         this.productInfoModel.in_colombo_charges = dataList.data[0].in_colombo_charges;
         this.productInfoModel.out_of_colombo_charges = dataList.data[0].out_of_colombo_charges;
         let productWeight = dataList.data[0].productWeigth;

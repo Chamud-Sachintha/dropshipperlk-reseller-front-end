@@ -13,6 +13,8 @@ export class Product {
     createTime!: string;
     in_colombo_charges!: string;
     out_of_colombo_charges!: string;
+    waranty!: string;
+    is_store_pick!: number;
     images!: string;
     image1!: string;
     image2!: string;
