@@ -13,9 +13,18 @@ export class MyTeamComponent implements OnInit {
   requestParamModel = new Request();
   myTeamList: MyTeam[] = [];
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 100;
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.loadTeam();
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage = event;
     this.loadTeam();
   }
 

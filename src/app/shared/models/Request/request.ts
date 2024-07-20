@@ -10,4 +10,6 @@ export class Request {
     quantity!: string;
     CardRID! :string;
     Cid! : any;
+    URprice!: any;
+    NewPassword!: string;
 }

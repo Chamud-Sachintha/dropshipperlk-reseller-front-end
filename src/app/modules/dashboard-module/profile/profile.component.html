@@ -76,12 +76,19 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <a class="btn btn-info " target="__blank"
+                            <div class="col-sm-2">
+                                <a class="btn btn-info" target="__blank"
                                     href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
                                     (click)="openEditProfileForm(1)"
                                     data-toggle="modal"
                                     data-target="#exampleModal">Edit</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn btn-warning" target="__blank"
+                                    href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
+                                    (click)="openEditProfileForm(1)"
+                                    data-toggle="modal"
+                                    data-target="#exampleModalpass">Password Change</a>
                             </div>
                         </div>
                     </div>
@@ -214,7 +221,7 @@
  <div class="modal-dialog" role="document">
    <div class="modal-content">
      <div class="modal-header">
-       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+       <h5 class="modal-title" id="exampleModalLabel">Edit Profile Details</h5>
        <a href="#" class="close" data-dismiss="modal" aria-label="Close">
          <span aria-hidden="true">&times;</span>
        </a>
@@ -224,19 +231,19 @@
            <div class="row">
                <div class="col-12">
                     <label for="">Full Name</label>
-                    <input type="text" class="form-control" formControlName="fullName">
+                    <input type="text" class="form-control" formControlName="fullname" value="{{ this.profileModel.fullName}}">
                </div>
                <div class="col-12">
                     <label for="">Buisness Name</label>
-                    <input type="text" class="form-control" formControlName="buisnessName">
+                    <input type="text" class="form-control" formControlName="buisnessName" value="{{ this.profileModel.buisnessName }}">
                 </div>
                <div class="col-12">
                     <label for="">Email Address</label>
-                    <input type="text" class="form-control" formControlName="email">
+                    <input type="text" class="form-control" formControlName="email" value="{{ this.profileModel.email }}">
                </div>
                <div class="col-12">
                     <label for="">Address</label>
-                    <input type="text" class="form-control" formControlName="address">
+                    <input type="text" class="form-control" formControlName="address" value="{{ this.profileModel.address}}">
                </div>
                <div class="col-12 mt-3">
                     <button class="btn btn-primary btn-sm" type="submit">Update</button>
@@ -377,6 +384,44 @@
           
             <div class="col-12 mt-3">
               <button class="btn btn-primary btn-sm" type="submit">Update</button>
+            </div>
+          </form>
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-- passsword change-->
+<div
+ class="modal fade"
+ id="exampleModalpass"
+ tabindex="-1"
+ role="dialog"
+ aria-labelledby="exampleModalLabel"
+ aria-hidden="true"
+>
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">passsword Change</h5>
+       <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </a>
+     </div>
+     <div class="modal-body" style="max-height: 500px; overflow-y: scroll;">
+        <form [formGroup]="passwordchangeForm" (ngSubmit)="onSubmitPasswordchange()" >
+            <div class="col-12">
+              <label for="">New Password</label>
+              <input type="password" class="form-control" formControlName="NewPassword" >
+              <div *ngIf="passwordchangeForm.get('NewPassword')?.invalid && passwordchangeForm.get('NewPassword')?.touched">
+                <span class="text-danger">New Password is required</span>
+              </div>
+            </div>
+          
+           
+          
+            <div class="col-12 mt-3">
+              <button class="btn btn-primary btn-sm" type="submit" >Update</button>
             </div>
           </form>
      </div>

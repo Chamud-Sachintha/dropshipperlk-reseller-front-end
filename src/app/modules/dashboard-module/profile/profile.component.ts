@@ -17,6 +17,7 @@ import { ProfileService } from 'src/app/shared/services/profile/profile.service'
 export class ProfileComponent implements OnInit {
 
   profileDetailsForm!: FormGroup;
+  passwordchangeForm!:  FormGroup;
   BankDetailsForm!: FormGroup;
   kycUploadForm!: FormGroup;
   requestModel = new Request();
@@ -24,10 +25,14 @@ export class ProfileComponent implements OnInit {
   BankDetails = new BankDetails();
   kycModel = new KYCInfo();
   isProfileModalOpen = false;
-  isAddKYCModalOpen = false;
+   isAddKYCModalOpen = false;
 
   constructor(private profileService: ProfileService, private formBuilder: FormBuilder, private router: Router
             , private tostr: ToastrService, private spinner: NgxSpinnerService, private fb: FormBuilder) {
+
+              this.passwordchangeForm = this.fb.group({
+                NewPassword: ['', [Validators.required]],
+              });
 
               this.BankDetailsForm = this.fb.group({
                 BankName: ['', Validators.required],
@@ -142,21 +147,35 @@ export class ProfileComponent implements OnInit {
 
   onSubmitUpdateProfileForm() {
 
-    const fullName = this.profileDetailsForm.controls['fullName'].value;
-    const buisnessName = this.profileDetailsForm.controls['buisnessName'].value;
-    const address = this.profileDetailsForm.controls['address'].value;
-    const email = this.profileDetailsForm.controls['email'].value;
+    const fullName = this.profileDetailsForm.value['fullname'];
+    const buisnessName = this.profileDetailsForm.value['buisnessName'];
+    const address = this.profileDetailsForm.value['address'];
+    const email = this.profileDetailsForm.value['email'];
+    console.log(this.profileDetailsForm);
 
     if (fullName == "") {
-
+      this.tostr.error("Full Name Required");
     } else if (buisnessName == "") {
-
+      this.tostr.error("Buisness Name Name Required");
     } else if (address == "") {
-
+      this.tostr.error("Address Required");
     } else if (email == "") {
-
+      this.tostr.error("Email Required");
     } else {
+      this.profileModel.token = sessionStorage.getItem("authToken");
+      this.profileModel.fullName = fullName;
+      this.profileModel.address = address;
+      this.profileModel.buisnessName = buisnessName;
+      this.profileModel.email = email;
 
+      this.profileService.UpdateProfileDetails(this.profileModel).subscribe((resp: any) => {
+        if (resp.code === 1) {
+          this.tostr.success(" Data Update Successfully.");
+          window.location.reload();
+        } else {
+          this.tostr.error("Error In Data", resp.message);
+        }   
+      })
     }
   }
 
@@ -256,6 +275,24 @@ export class ProfileComponent implements OnInit {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
     });
+  }
+
+  onSubmitPasswordchange(){
+    this.requestModel.token = sessionStorage.getItem("authToken");
+    this.requestModel.NewPassword = this.passwordchangeForm.value['NewPassword'] ;
+
+    this.profileService.UpdatePassword(this.requestModel).subscribe((resp: any) => {
+
+      const dataList = JSON.parse(JSON.stringify(resp));
+
+      if (resp.code === 1) {
+        this.tostr.success("Bank Data Upload Successfully.");
+        window.location.reload();
+      }
+      else {
+        this.tostr.error("Error In Data", resp.message);
+      } 
+    })
   }
 
 }

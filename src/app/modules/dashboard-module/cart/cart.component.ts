@@ -42,6 +42,7 @@ export class CartComponent implements OnInit {
       name: [''],
       address: [''],
       district: [''],
+      bankSlip: [''],
     });
   }
 
@@ -89,7 +90,9 @@ export class CartComponent implements OnInit {
     } else if (!paymentMethod) {
         this.tostr.error("Empty Field Found", "Payment Method is required");
     } else {
+      console.log("bankSlip",bankSlip);
         if (bankSlip) {
+         
             this.convertImageToBase64(bankSlip).then((base64String) => {
               
                  this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);

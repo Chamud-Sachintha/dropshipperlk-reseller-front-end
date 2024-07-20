@@ -5,7 +5,7 @@ export class Product {
     productName!: string;
     categoryName!: string;
     description!: string;
-    inStock!: boolean;
+    inStock!: string;
     price!: string;
     teamCommision!: string;
     directCommision!: string;
@@ -13,6 +13,8 @@ export class Product {
     createTime!: string;
     in_colombo_charges!: string;
     out_of_colombo_charges!: string;
+    waranty!: string;
+    is_store_pick!: number;
     images!: string;
     image1!: string;
     image2!: string;

@@ -23,13 +23,13 @@
                         <div class="row">
                             <div class="col-5">
                                 <label for="">Price</label>
-                                <h2>LKR. {{ this.productInfoModel.price }} .00</h2>
+                                <h2>LKR. {{ this.productInfoModel.price }}</h2>
                             </div>
                             <div class="col-1"></div>
                             <div class="col-4">
                                 <label for="">Product Status</label>
-                                <p *ngIf="this.productInfoModel.inStock" style="font-weight: bolder; color: green; margin-top: 10px;">Available</p>
-                                <p *ngIf="!this.productInfoModel.inStock" style="font-weight: bolder; color: red; margin-top: 10px;">Not Available</p>
+                                <p *ngIf="+this.productInfoModel.inStock === 1" style="font-weight: bolder; color: green; margin-top: 10px;">Available</p>
+                                <p *ngIf="+this.productInfoModel.inStock === 0" style="font-weight: bolder; color: red; margin-top: 10px;">Not Available</p>
                             </div>
                         </div>
                         <div class="row">
@@ -54,8 +54,20 @@
                                 <h2>{{this.productInfoModel.Stock}}</h2>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="">Warranty</label>
+                                <h3>{{this.productInfoModel.waranty}}</h3>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-4">
+                                <label for="">Store Pick</label>
+                                <p *ngIf="+this.productInfoModel.is_store_pick === 1" style="font-weight: bolder; color: green; margin-top: 10px;">Store Pick Available</p>
+                                <p *ngIf="+this.productInfoModel.is_store_pick === 0" style="font-weight: bolder; color: red; margin-top: 10px;">Store Pick Not Available</p>
+                            </div>
+                        </div>
                         <div class="row mt-3">
-                            <div class="col-4" *ngIf="!this.productInfoModel.isResell">
+                            <div class="col-4" *ngIf="!this.productInfoModel.isResell && +this.productInfoModel.inStock !== 0">
                                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="onClickOpenResellForm()">Resell Product</button>
                             </div>
                             <div class="col-4 mt-3" *ngIf="this.productInfoModel.isResell">

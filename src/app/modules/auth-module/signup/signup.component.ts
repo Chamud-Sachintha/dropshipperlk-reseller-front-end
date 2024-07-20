@@ -63,7 +63,7 @@ export class SignupComponent implements OnInit {
       this.authService.registerNewReseller(this.authModel).subscribe((resp: any) => {
 
         if (resp.code === 1) {
-          this.tostr.success("Register User", "Use Register Suvvessfully");
+          this.tostr.success("Register User", "Use Register Successfully");
         } else {
           this.tostr.error("Register User", resp.message);
         }

@@ -1,4 +1,5 @@
 export class Profile {
+    token!: any;
     fullName!: string;
     address!: string;
     buisnessName!: string;

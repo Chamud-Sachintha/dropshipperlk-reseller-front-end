@@ -16,12 +16,21 @@ export class OrderManagementComponent implements OnInit {
   searchText = '';
   filteredOrderRequestList: OrderInfo[] = [];
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 100;
+
 
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrderList();
     this.filteredOrderRequestList = this.orderInfoList; 
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage = event;
+    this.loadOrderList();
   }
 
   filterOrderRequestList() {
