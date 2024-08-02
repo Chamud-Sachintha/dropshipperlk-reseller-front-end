@@ -33,4 +33,9 @@ export class ResellService {
     const path = environment.apiURL + "update-product-from-price";
     return this.http.post(path, requestParamModel);
   }
+
+  getCityList(requestModel: Request) {
+    const path = environment.apiURL + "get-city-list";
+    return this.http.post(path, requestModel);
+  }
 }

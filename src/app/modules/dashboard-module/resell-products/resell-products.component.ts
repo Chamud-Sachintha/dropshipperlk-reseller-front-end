@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { debounceTime, firstValueFrom, map } from 'rxjs';
 import { CartItem } from 'src/app/shared/models/CartItem/cart-item';
 import { OrderRequest } from 'src/app/shared/models/OrderRequest/order-request';
 import { Product } from 'src/app/shared/models/Product/product';
@@ -38,12 +39,34 @@ export class ResellProductsComponent implements OnInit {
   itemsPerPage = 10;
   totalItems = 100;
 
+  keyword = 'name';
+  filterData: any[] = [];
+  showDrpDown = false;
+
+  allCities: { cityName: string, [key: string]: any }[] = [
+    { cityName: 'New York', country: 'USA' },
+    { cityName: 'Los Angeles', country: 'USA' },
+    { cityName: 'Chicago', country: 'USA' },
+    { cityName: 'Toronto', country: 'Canada' },
+    // Add more cities as needed
+  ];
+  data: { cityName: string, [key: string]: any }[] = [];
+  selectedCity: string = '';
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
             , private productService: ProductService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    // Fetch and store cities if not already done
+    if (!localStorage.getItem('cities')) {
+      this.loadCityList();
+    } else {
+      // Load cities from localStorage
+      this.allCities = JSON.parse(localStorage.getItem('cities') || '[]')
+        .map((city: any) => city);
+    }
+
     this.loadResellProductList();
     this.initPlaceOrderForm();
     this.getcartcount();
@@ -52,7 +75,7 @@ export class ResellProductsComponent implements OnInit {
       URprice: [''] 
     });
     this.placeOrderForm = this.fb.group({
-      location: ['colombo', Validators.required],
+      location: ['', Validators.required],
       city: [''] ,
       firstContact: ['', [Validators.pattern('^[0-9]*$'), Validators.maxLength(10),Validators.required]],
       secondContact: ['', [Validators.required,Validators.pattern('^[0-9]*$'), Validators.maxLength(10)]],
@@ -63,6 +86,68 @@ export class ResellProductsComponent implements OnInit {
       district: [''],
       bankSlip:[''],
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent): void {
+    this.showDrpDown = false;
+  }
+
+  onSearchV(event: any): void {
+    this.showDrpDown = true;
+    const query = event.target.value.toLowerCase().trim();
+    if (query) {
+      this.data = this.allCities.filter((city: any) =>
+        city.toLowerCase().includes(query)
+      );
+    } else {
+      this.data = [...this.allCities]; // Reset to all cities if query is empty
+    }
+  }
+
+  onSelect(city: any): void {
+    this.selectedCity = city;
+    this.showDrpDown = false;
+
+    this.placeOrderForm.controls['location'].setValue(this.selectedCity);
+    // Additional logic can be added here if needed
+  }
+
+  selectEvent(item: any) {
+    // do something with selected item
+  }
+
+  onChangeSearch(query: string) {
+    if (!query) {
+      this.data = this.allCities; // Show all if query is empty
+    } else {
+      this.data = this.allCities
+        .filter((city: any) => {console.log(city); city.toLowerCase().includes(query.toLowerCase())});
+    }
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+  
+  onFocused(e: any){
+    // do something when input is focused
+  }
+
+  loadCityList() {
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+
+    return firstValueFrom(this.resellService.getCityList(this.requestParamModel))
+    .then((resp: any) => {
+      const dataList = resp.data; // No need to parse if `resp.data` is already an object
+      localStorage.setItem('cities', JSON.stringify(dataList[0].map((el: any) => el.cityName)));
+    })
+    .catch((error) => {
+      console.error('Error fetching city list:', error);
+      // Handle the error appropriately here
+    });
+  }
+
+  onItemSelect(selectedItem: any) {
+    console.log('Selected item:', selectedItem);
   }
 
   pageChanged(event: any): void {

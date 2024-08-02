@@ -88,7 +88,7 @@
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Place New Order</h5>
@@ -109,6 +109,25 @@
                             <input type="text" class="form-control" formControlName="address">
                         </div>
                         <div class="col-12 mt-3">
+                            <div class="autocomplete-container">
+                                <input formControlName="location"
+                                    class="form-control"
+                                  type="text" 
+                                  (input)="onSearchV($event)" 
+                                  placeholder="Type to search..."
+                                />
+                              
+                                <ul *ngIf="data.length > 0 && showDrpDown" class="autocomplete-list">
+                                  <li 
+                                    *ngFor="let city of data" 
+                                    (click)="onSelect(city)"
+                                  >
+                                    {{ city }}
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 mt-3">
                             <label for="">City</label>
                             <select class="form-control" formControlName="location" >
                                 
@@ -131,7 +150,7 @@
                                 <option value="outOfColombo">Out of Colombo</option>
                             </select>
                             
-                        </div>
+                        </div> -->
                         <div class="col-12 mt-3" *ngIf="placeOrderForm.controls['location'].value === 'outOfColombo'">
                             <label for="city">City</label>
                             <input type="text" class="form-control" formControlName="city">
