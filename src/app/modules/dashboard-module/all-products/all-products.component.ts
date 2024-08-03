@@ -33,7 +33,7 @@ export class AllProductsComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage = event;
-    this.loadAllProductList();
+    // this.loadAllProductList();
   }
 
   seeProduct(pid: string) {

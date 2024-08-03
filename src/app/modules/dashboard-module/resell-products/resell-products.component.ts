@@ -152,7 +152,7 @@ export class ResellProductsComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage = event;
-    this.loadResellProductList();
+    // this.loadResellProductList();
   }
 
   removeResellProduct(productId: string) {

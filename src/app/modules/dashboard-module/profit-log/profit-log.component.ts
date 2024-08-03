@@ -25,7 +25,7 @@ export class ProfitLogComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage = event;
-    this.loadProfitLogList();
+    // this.loadProfitLogList();
   }
 
   loadProfitLogList() {

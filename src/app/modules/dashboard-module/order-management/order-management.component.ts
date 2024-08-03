@@ -30,7 +30,7 @@ export class OrderManagementComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage = event;
-    this.loadOrderList();
+    // this.loadOrderList();
   }
 
   filterOrderRequestList() {

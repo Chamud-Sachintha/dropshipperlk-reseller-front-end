@@ -25,7 +25,7 @@ export class MyTeamComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage = event;
-    this.loadTeam();
+    // this.loadTeam();
   }
 
   loadTeam() {
