@@ -85,6 +85,7 @@ export class ResellProductsComponent implements OnInit {
       address: [''],
       district: [''],
       bankSlip:[''],
+      inColombo: ['', Validators.required]
     });
   }
 
@@ -427,12 +428,13 @@ console.log('bankslip' + bankSlip);
     const selectedValue = event.target.value;
     
     const location = this.placeOrderForm.controls['location']?.value;
+    const inColomboCheck = this.placeOrderForm.controls['inColombo'].value;
     const cityControl = this.placeOrderForm.get('city');
     const Quantity = this.placeOrderForm.get('quantity');
     const QuantityValue = Quantity?.value;
     console.log("Selected location: ", location);
     if (cityControl) {
-        if (location === 'outOfColombo') {
+        if (inColomboCheck === '1') {
           console.log("Selected Value: ", selectedValue);
             cityControl.enable();
            
