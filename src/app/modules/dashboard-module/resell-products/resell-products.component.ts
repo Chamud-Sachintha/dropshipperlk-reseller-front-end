@@ -271,17 +271,17 @@ export class ResellProductsComponent implements OnInit {
     } else if (!paymentMethod) {
         this.tostr.error("Empty Field Found", "Payment Method is required");
     } else {
-        // if (bankSlip) {
+        if (bankSlip) {
 
           
-        //     this.convertImageToBase64(bankSlip).then((base64String) => {
-        //       console.log('slip part' + base64String)
-        //          this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);
-        //     })
-        // } else {
+            this.convertImageToBase64(bankSlip).then((base64String) => {
+              console.log('slip part' + base64String)
+                 this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);
+            })
+        } else {
          
-        //     this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal);
-        // }
+            this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal);
+        }
         
     }
   }
