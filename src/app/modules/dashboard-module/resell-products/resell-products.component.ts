@@ -231,7 +231,7 @@ export class ResellProductsComponent implements OnInit {
     const name = this.placeOrderForm.controls['name']?.value;
     const address = this.placeOrderForm.controls['address']?.value;
     const location = this.placeOrderForm.controls['location']?.value;
-    let city: string;
+    let city: any;
 
     if (location === 'outOfColombo') {
         city = this.placeOrderForm.controls['city']?.value;
@@ -248,6 +248,13 @@ export class ResellProductsComponent implements OnInit {
     const quantity = this.placeOrderForm.controls['quantity']?.value;
     const bankSlip = this.placeOrderForm.controls['bankSlip']?.value;
     const FinalTotal = this.cartItemModel.FinaltotalAmount;
+
+    const cityList = localStorage.getItem("cities");
+
+    if (!this.verifyCity(city, cityList)) {
+      this.tostr.error("Invalid City Selected", "City is required");
+    }
+
     console.log("data list",name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, bankSlip);
     if (!name) {
         this.tostr.error("Empty Field Found", "Name is required");
@@ -264,19 +271,32 @@ export class ResellProductsComponent implements OnInit {
     } else if (!paymentMethod) {
         this.tostr.error("Empty Field Found", "Payment Method is required");
     } else {
-        if (bankSlip) {
+        // if (bankSlip) {
 
           
-            this.convertImageToBase64(bankSlip).then((base64String) => {
-              console.log('slip part' + base64String)
-                 this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);
-            })
-        } else {
+        //     this.convertImageToBase64(bankSlip).then((base64String) => {
+        //       console.log('slip part' + base64String)
+        //          this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);
+        //     })
+        // } else {
          
-            this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal);
-        }
+        //     this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal);
+        // }
         
     }
+  }
+
+  verifyCity(city: any, cityList: any) {
+    const f = JSON.parse(cityList);
+    
+    var res = false;
+    f.forEach((el: any) => {
+      if (el === city) {
+        res = true;
+      }
+    })
+
+    return res;
   }
 
   placeOrder(name: string, address: string, city: string, district: string, firstContact: string, secondContact: string, paymentMethod: string, quantity: string, FinalTotal: number, bankSlip = "") {
