@@ -76,6 +76,7 @@ export class CheckOrderComponent implements OnInit {
         this.orderInfoModel.address = dataList.data[0].reselladdress;
         this.orderInfoModel.contact_1 = dataList.data[0].resellcontact_1;
         this.orderInfoModel.contact_2 = dataList.data[0].resellcontact_2;
+        this.orderInfoModel.holdNotice = dataList.data[0].holdNotice;
        
        // console.log('name',this.orderInfoModel.name)
         // this.orderInfoModel.image1 = environment.fileServer + "images/" + dataList.data[0].images.image0;

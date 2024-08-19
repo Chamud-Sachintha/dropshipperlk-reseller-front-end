@@ -12,15 +12,33 @@ export class MyTeamComponent implements OnInit {
 
   requestParamModel = new Request();
   myTeamList: MyTeam[] = [];
+  searchText = '';
 
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 100;
 
+  filteredOrderRequestList: MyTeam[] = [];
+  
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadTeam();
+    this.filteredOrderRequestList = this.myTeamList; 
+  }
+
+  filterOrderRequestList() {
+    if (!this.searchText) {
+      this.filteredOrderRequestList = this.myTeamList; // Reset to the original data if search text is empty
+    } else {
+      const searchTextLower = this.searchText.toLowerCase();
+      this.filteredOrderRequestList = this.myTeamList.filter(order =>
+        Object.values(order).some(value =>
+          value ? value.toString().toLowerCase().includes(searchTextLower) : false
+        )
+      );
+    }
   }
 
   pageChanged(event: any): void {

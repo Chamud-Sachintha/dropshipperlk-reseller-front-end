@@ -17,7 +17,8 @@ import { SessionInfoComponent } from './session-info/session-info.component';
 import { CartComponent } from './cart/cart.component';
 import { HeaderBannerComponent } from './header-banner/header-banner.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { ReportsComponent } from './reports/reports.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MyTeamComponent,
     SessionInfoComponent,
     CartComponent,
-    HeaderBannerComponent
+    HeaderBannerComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,
     DashboardModuleRoutingModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule

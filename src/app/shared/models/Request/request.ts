@@ -12,4 +12,6 @@ export class Request {
     Cid! : any;
     URprice!: any;
     NewPassword!: string;
+    selectedReportType: any;
+    sellerId!: string;
 }

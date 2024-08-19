@@ -7,7 +7,8 @@
                     <h5 class="card-header">Product Informations</h5>
                 </div>
                 <div class="col-6">
-                    <h5 class="card-header" style="float: right;">Order Status - {{ this.orderInfoModel.orderStatus }}</h5>
+                    <h5 class="card-header" style="float: right;">Order Status - {{ this.orderInfoModel.orderStatus }}
+                    </h5>
                 </div>
             </div>
             <div class="card-body">
@@ -15,7 +16,7 @@
                     <div class="col-12">
                         <div class="card">
                             <h5 class="card-header">Order Item List</h5>
-                
+
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="table-responsive">
@@ -144,50 +145,59 @@
                         </div>
                     </div>
                 </div> -->
-            
+
                 <div class="row">
                     <div class="col-12">
-                      <div class="card">
-                        <h5 class="card-header">Additional Informations</h5>
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-4">
-                              <label for="">Customer Name:</label>
-                              <p>{{ this.orderInfoModel.name }}</p>
+                        <div class="card">
+                            <h5 class="card-header">Additional Informations</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="">Customer Name:</label>
+                                        <p>{{ this.orderInfoModel.name }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="">Customer Address:</label>
+                                        <p>{{ this.orderInfoModel.address }}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Contact No:</label>
+                                        <p>{{ this.orderInfoModel.contact_1 }}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="">Contact No 2:</label>
+                                        <p>{{ this.orderInfoModel.contact_2 }}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                              <label for="">Customer Address:</label>
-                              <p>{{ this.orderInfoModel.address }}</p>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="">Payment Status:</label>
+                                        <p>{{ this.orderInfoModel.paymentStatus }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="">Team Commission:</label>
+                                        <p>{{ this.orderInfoModel.teamCommision }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="">Direct Commission:</label>
+                                        <p>{{ this.orderInfoModel.directCommision }}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                              <label for="">Contact No:</label>
-                              <p>{{ this.orderInfoModel.contact_1 }}</p>
-                            </div>
-                            <div class="col-md-2">
-                              <label for="">Contact No 2:</label>
-                              <p>{{ this.orderInfoModel.contact_2 }}</p>
-                            </div>
-                          </div>
                         </div>
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-4">
-                              <label for="">Payment Status:</label>
-                              <p>{{ this.orderInfoModel.paymentStatus }}</p>
+
+                        <div class="card" *ngIf="this.orderInfoModel.holdNotice != null">
+                            <h5 class="card-header">Order Hold Notice</h5>
+                            <div class="card-body">
+                                <div class="alert alert-primary" role="alert">
+                                    {{ this.orderInfoModel.holdNotice }}
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                              <label for="">Team Commission:</label>
-                              <p>{{ this.orderInfoModel.teamCommision }}</p>
-                            </div>
-                            <div class="col-md-4">
-                              <label for="">Direct Commission:</label>
-                              <p>{{ this.orderInfoModel.directCommision }}</p>
-                            </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
     </div>

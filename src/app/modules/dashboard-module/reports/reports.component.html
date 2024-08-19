@@ -1,0 +1,47 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="row">
+    <!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner> -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <h2 class="pageheader-title">Hello, Welcome</h2>
+            <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis
+                faucibus at enim quis massa lobortis rutrum.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">Download Reports </h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Select Download Report</label>
+                        <select class="form-control" id="reportType" style="width: 20%;" [(ngModel)]="selectedReportType">
+                            <option value="" selected disabled>Choose</option>
+                            <option value="1">Order Report</option>
+                            <!-- <option value="2" >Bank Details</option>
+                            <option value="3" >Payment Management</option> -->
+                        </select>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <button class="btn btn-primary btn-sm" (click)="downloadReport()">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

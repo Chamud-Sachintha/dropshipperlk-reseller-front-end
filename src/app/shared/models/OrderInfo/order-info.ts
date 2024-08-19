@@ -10,4 +10,5 @@ export class OrderInfo {
     orderPlaceDate!: string;
     TrackingNumber!: string;
     courierName!:  string;
+    remark!: string;
 }
