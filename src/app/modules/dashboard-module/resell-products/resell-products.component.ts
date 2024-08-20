@@ -53,6 +53,7 @@ export class ResellProductsComponent implements OnInit {
   data: { cityName: string, [key: string]: any }[] = [];
   selectedCity: string = '';
   finalTotalAmount = 0;
+  isDeliveryChargeApplied = false;
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
@@ -446,11 +447,15 @@ export class ResellProductsComponent implements OnInit {
   }
 
   onSetDeliveryCharge() {
-    const t = this.placeOrderForm.controls['paymentMethod'].value
-    if (t === "3") {
+    const paymentMethod = this.placeOrderForm.controls['paymentMethod'].value;
+    if (paymentMethod === "3" && !this.isDeliveryChargeApplied) {
+      // Apply the charge only if it hasn't been applied yet
       this.finalTotalAmount -= 350;
-    } else {
+      this.isDeliveryChargeApplied = true;
+    } else if (paymentMethod !== "3" && this.isDeliveryChargeApplied) {
+      // Remove the charge only if it has been applied
       this.finalTotalAmount += 350;
+      this.isDeliveryChargeApplied = false;
     }
   }
 
