@@ -197,7 +197,7 @@
 
                         <div class="col-12 mt-3">
                             <label for="">Payment Method</label>
-                            <select name="" id="" class="form-control" #paymentMethod formControlName="paymentMethod" >
+                            <select name="" id="" class="form-control" #paymentMethod formControlName="paymentMethod" (change)="onSetDeliveryCharge()">
                                 <option value="">-- Select Payment Method</option>
                                 <option value="1">Bank Deposit</option>
                                 <option value="2">Cash On Delivery</option>
@@ -229,7 +229,7 @@
                             </div>
                             <hr>
                         </div>
-                        <h5 class="card-header" style="float: right;">Total Amount: LKR. {{ this.cartItemModel.FinaltotalAmount }} .00</h5>
+                        <h5 class="card-header" style="float: right;">Total Amount: LKR. {{ this.finalTotalAmount }} .00</h5>
                     </div>
                 </div>
                 <div class="modal-footer">

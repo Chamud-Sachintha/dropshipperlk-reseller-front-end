@@ -25,7 +25,6 @@ export class ReportsComponent {
 
   downloadReport(): void {
     this.requestDownload.selectedReportType = this.selectedReportType;
-    this.requestDownload.sellerId = "10";
     this.requestDownload.token = sessionStorage.getItem('authToken');
 
     this.spinner.show();

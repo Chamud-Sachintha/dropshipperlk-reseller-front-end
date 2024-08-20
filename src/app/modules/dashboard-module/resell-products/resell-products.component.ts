@@ -52,6 +52,7 @@ export class ResellProductsComponent implements OnInit {
   ];
   data: { cityName: string, [key: string]: any }[] = [];
   selectedCity: string = '';
+  finalTotalAmount = 0;
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
@@ -249,7 +250,7 @@ export class ResellProductsComponent implements OnInit {
     const quantity = this.placeOrderForm.controls['quantity']?.value;
     const bankSlip = this.placeOrderForm.controls['bankSlip']?.value;
     const remark = this.placeOrderForm.controls['remark'].value;
-    const FinalTotal = this.cartItemModel.FinaltotalAmount;
+    const FinalTotal = this.finalTotalAmount;
 
     const cityList = localStorage.getItem("cities");
 
@@ -442,9 +443,15 @@ export class ResellProductsComponent implements OnInit {
         } else {
           console.log("Product with ID '11' not found in the list.");
         }
-     
+  }
 
-
+  onSetDeliveryCharge() {
+    const t = this.placeOrderForm.controls['paymentMethod'].value
+    if (t === "3") {
+      this.finalTotalAmount -= 350;
+    } else {
+      this.finalTotalAmount += 350;
+    }
   }
 
   onLocationChange(event: any) {
@@ -467,7 +474,7 @@ export class ResellProductsComponent implements OnInit {
             const totalqunity = parseFloat(QuantityValue);
             const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
            
-            this.cartItemModel.FinaltotalAmount = fullTotal;
+            this.finalTotalAmount = fullTotal;
             console.log("fisnl Value: ", fullTotal);
            
         } else {
@@ -478,7 +485,7 @@ export class ResellProductsComponent implements OnInit {
             const outOfColomboCharges = parseFloat(this.productInfoModel.in_colombo_charges);
 
             const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
-            this.cartItemModel.FinaltotalAmount = fullTotal;
+            this.finalTotalAmount = fullTotal;
             console.log("in Value: ", fullTotal);
         }
     }
