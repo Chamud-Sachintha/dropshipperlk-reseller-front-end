@@ -10,4 +10,5 @@ export class DashboardModel {
     pendingPayment!: string;
     refCode!: string;
     DeliverdOrder!: string;
+    teamCommisionTotal!: string;
 }
