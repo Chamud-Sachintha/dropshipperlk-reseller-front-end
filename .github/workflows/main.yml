@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
           scp -P 21098 -o StrictHostKeyChecking=no -r ./dist/dropshipper-reseller-front-end dripmvuk@server350.web-hosting.com:/home/dripmvuk/testreseller.dropshipper.lk
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
