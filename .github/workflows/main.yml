@@ -28,6 +28,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          scp -o StrictHostKeyChecking=no -r ./dist/dropshipper-reseller-front-end dripmvuk@66.29.153.107:/home/dripmvuk/testreseller.dropshipper.lk
+          scp -o StrictHostKeyChecking=no -r ./dist/dropshipper-reseller-front-end dripmvuk@server350.web-hosting.com:/home/dripmvuk/testreseller.dropshipper.lk
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
