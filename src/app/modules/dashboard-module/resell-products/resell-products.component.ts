@@ -52,6 +52,8 @@ export class ResellProductsComponent implements OnInit {
   ];
   data: { cityName: string, [key: string]: any }[] = [];
   selectedCity: string = '';
+  finalTotalAmount = 0;
+  isDeliveryChargeApplied = false;
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
             , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
@@ -85,7 +87,8 @@ export class ResellProductsComponent implements OnInit {
       address: [''],
       district: [''],
       bankSlip:[''],
-      inColombo: ['', Validators.required]
+      inColombo: ['', Validators.required],
+      remark: ['', Validators.required]
     });
   }
 
@@ -247,7 +250,8 @@ export class ResellProductsComponent implements OnInit {
     const paymentMethod = this.placeOrderForm.controls['paymentMethod']?.value;
     const quantity = this.placeOrderForm.controls['quantity']?.value;
     const bankSlip = this.placeOrderForm.controls['bankSlip']?.value;
-    const FinalTotal = this.cartItemModel.FinaltotalAmount;
+    const remark = this.placeOrderForm.controls['remark'].value;
+    const FinalTotal = this.finalTotalAmount;
 
     const cityList = localStorage.getItem("cities");
 
@@ -276,11 +280,11 @@ export class ResellProductsComponent implements OnInit {
           
             this.convertImageToBase64(bankSlip).then((base64String) => {
               console.log('slip part' + base64String)
-                 this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, base64String);
+                 this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, remark, base64String);
             })
         } else {
          
-            this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal);
+            this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, remark);
         }
         
     }
@@ -299,7 +303,7 @@ export class ResellProductsComponent implements OnInit {
     return res;
   }
 
-  placeOrder(name: string, address: string, city: string, district: string, firstContact: string, secondContact: string, paymentMethod: string, quantity: string, FinalTotal: number, bankSlip = "") {
+  placeOrder(name: string, address: string, city: string, district: string, firstContact: string, secondContact: string, paymentMethod: string, quantity: string, FinalTotal: number, remark: string, bankSlip = "") {
     this.orderRequestModel.token = sessionStorage.getItem("authToken");
     this.orderRequestModel.name = name;
     this.orderRequestModel.address = address;
@@ -311,11 +315,12 @@ export class ResellProductsComponent implements OnInit {
     this.orderRequestModel.pid = this.productId;
     this.orderRequestModel.quantity = quantity;
     this.orderRequestModel.FinalTotal = FinalTotal;
+    this.orderRequestModel.remark = remark;
 
     if (bankSlip != "") {
       this.orderRequestModel.bankSlip = bankSlip;
     }
-console.log('bankslip' + bankSlip);
+
     this.spinner.show();
     this.orderService.placeNewOrder(this.orderRequestModel).subscribe((resp: any) => {
 
@@ -439,9 +444,19 @@ console.log('bankslip' + bankSlip);
         } else {
           console.log("Product with ID '11' not found in the list.");
         }
-     
+  }
 
-
+  onSetDeliveryCharge() {
+    const paymentMethod = this.placeOrderForm.controls['paymentMethod'].value;
+    if (paymentMethod === "3" && !this.isDeliveryChargeApplied) {
+      // Apply the charge only if it hasn't been applied yet
+      this.finalTotalAmount -= 350;
+      this.isDeliveryChargeApplied = true;
+    } else if (paymentMethod !== "3" && this.isDeliveryChargeApplied) {
+      // Remove the charge only if it has been applied
+      this.finalTotalAmount += 350;
+      this.isDeliveryChargeApplied = false;
+    }
   }
 
   onLocationChange(event: any) {
@@ -464,7 +479,7 @@ console.log('bankslip' + bankSlip);
             const totalqunity = parseFloat(QuantityValue);
             const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
            
-            this.cartItemModel.FinaltotalAmount = fullTotal;
+            this.finalTotalAmount = fullTotal;
             console.log("fisnl Value: ", fullTotal);
            
         } else {
@@ -475,7 +490,7 @@ console.log('bankslip' + bankSlip);
             const outOfColomboCharges = parseFloat(this.productInfoModel.in_colombo_charges);
 
             const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
-            this.cartItemModel.FinaltotalAmount = fullTotal;
+            this.finalTotalAmount = fullTotal;
             console.log("in Value: ", fullTotal);
         }
     }

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">My Team Informations</h5>
+            <h5 class="card-header">My Team Informations <label style="margin-left: 680px;" >Searche Orders:</label> &nbsp; <input type="text" style="width: 140px;" [(ngModel)]="searchText" (input)="filterOrderRequestList()"></h5>
 
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -17,7 +17,7 @@
                                 </tr>
                             </thead>
                            <tbody>
-                            <tr *ngFor="let eachSeller of this.myTeamList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; index as i">
+                            <tr *ngFor="let eachSeller of this.filteredOrderRequestList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; index as i">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{ eachSeller.fullName }}</td>
                                 <td>{{ eachSeller.bName }}</td>
