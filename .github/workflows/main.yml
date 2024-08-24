@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - common
+      - master
   workflow_dispatch:  # Allows manual triggering via GitHub's Actions tab
 jobs:
   build:
