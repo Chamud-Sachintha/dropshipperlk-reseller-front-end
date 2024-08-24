@@ -18,6 +18,47 @@
     background: linear-gradient(45deg,#FF5370,#ff869a);
 }
 
+.bg-c-purple {
+    background: linear-gradient(45deg, #9b59b6, #b084cc);
+}
+
+.bg-c-red {
+    background: linear-gradient(45deg, #e74c3c, #f1948a);
+}
+
+.bg-c-orange {
+    background: linear-gradient(45deg, #e67e22, #f0a473);
+}
+
+.bg-c-teal {
+    background: linear-gradient(45deg, #1abc9c, #48c9b0);
+}
+
+.bg-c-lime {
+    background: linear-gradient(45deg, #8bc34a, #aed581);
+}
+
+.bg-c-cyan {
+    background: linear-gradient(45deg, #00bcd4, #4dd0e1);
+}
+
+.bg-c-indigo {
+    background: linear-gradient(45deg, #3f51b5, #7986cb);
+}
+
+.bg-c-gray {
+    background: linear-gradient(45deg, #7f8c8d, #bdc3c7);
+}
+
+.bg-c-brown {
+    background: linear-gradient(45deg, #795548, #a1887f);
+}
+
+.bg-c-turquoise {
+    background: linear-gradient(45deg, #40e0d0, #48d1cc);
+}
+
+
 
 .card {
     border-radius: 5px;
