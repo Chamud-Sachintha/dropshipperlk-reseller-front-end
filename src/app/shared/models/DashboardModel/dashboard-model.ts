@@ -11,4 +11,6 @@ export class DashboardModel {
     refCode!: string;
     DeliverdOrder!: string;
     teamCommisionTotal!: string;
+    teamCount!: string;
+    holdOrders!: string;
 }
