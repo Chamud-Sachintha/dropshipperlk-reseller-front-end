@@ -37,6 +37,9 @@ export class HomeComponent implements OnInit {
         this.dashboardModel.paidOrders = dataList.data[0].paidOrders;
         this.dashboardModel.refCode = dataList.data[0].refCode;
         this.dashboardModel.DeliverdOrder = dataList.data[0].Deleriverd;
+        this.dashboardModel.holdOrders = dataList.data[0].holdOrderCount;
+        this.dashboardModel.teamCount = dataList.data[0].teamCount;
+        this.dashboardModel.returnOrders = dataList.data[0].returnOrderCount;
         this.dashboardModel.teamCommisionTotal = dataList.data[0].teamCommisionTotal;
       }
     })
