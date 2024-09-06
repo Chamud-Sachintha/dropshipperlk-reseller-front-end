@@ -31,7 +31,7 @@ export class ResellProductsComponent implements OnInit {
   cartItemModel = new CartItem();
   cartItemList: CartItem[] = [];
   productInfoModel = new Product();
-  cartItemsCount: string='';
+  cartItemsCount: string = '';
   Updateprice!: any;
   priceupdateform!: FormGroup;
 
@@ -56,8 +56,8 @@ export class ResellProductsComponent implements OnInit {
   isDeliveryChargeApplied = false;
 
   constructor(private resellService: ResellService, private formBuilder: FormBuilder, private orderService: OrderService
-            , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
-            , private productService: ProductService, private fb: FormBuilder) {}
+    , private router: Router, private tostr: ToastrService, private spinner: NgxSpinnerService
+    , private productService: ProductService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     // Fetch and store cities if not already done
@@ -74,26 +74,26 @@ export class ResellProductsComponent implements OnInit {
     this.getcartcount();
     this.initAddProductQuantityForm();
     this.priceupdateform = this.fb.group({
-      URprice: [''] 
+      URprice: ['']
     });
     this.placeOrderForm = this.fb.group({
       location: ['', Validators.required],
-      city: [''] ,
-      firstContact: ['', [Validators.pattern('^[0-9]*$'), Validators.maxLength(10),Validators.required]],
-      secondContact: ['', [Validators.required,Validators.pattern('^[0-9]*$'), Validators.maxLength(10)]],
-      quantity: ['', [Validators.required,Validators.pattern('^[0-9]*$')]],
+      city: [''],
+      firstContact: ['', [Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.required]],
+      secondContact: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(10)]],
+      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       paymentMethod: ['', Validators.required],
       name: [''],
       address: [''],
       district: [''],
-      bankSlip:[''],
+      bankSlip: [''],
       inColombo: ['', Validators.required],
       remark: ['', Validators.required]
     });
   }
 
   @HostListener('document:click', ['$event'])
-    onDocumentClick(event: MouseEvent): void {
+  onDocumentClick(event: MouseEvent): void {
     this.showDrpDown = false;
   }
 
@@ -126,13 +126,13 @@ export class ResellProductsComponent implements OnInit {
       this.data = this.allCities; // Show all if query is empty
     } else {
       this.data = this.allCities
-        .filter((city: any) => {console.log(city); city.toLowerCase().includes(query.toLowerCase())});
+        .filter((city: any) => { console.log(city); city.toLowerCase().includes(query.toLowerCase()) });
     }
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
   }
-  
-  onFocused(e: any){
+
+  onFocused(e: any) {
     // do something when input is focused
   }
 
@@ -140,14 +140,14 @@ export class ResellProductsComponent implements OnInit {
     this.requestParamModel.token = sessionStorage.getItem("authToken");
 
     return firstValueFrom(this.resellService.getCityList(this.requestParamModel))
-    .then((resp: any) => {
-      const dataList = resp.data; // No need to parse if `resp.data` is already an object
-      localStorage.setItem('cities', JSON.stringify(dataList[0].map((el: any) => el.cityName)));
-    })
-    .catch((error) => {
-      console.error('Error fetching city list:', error);
-      // Handle the error appropriately here
-    });
+      .then((resp: any) => {
+        const dataList = resp.data; // No need to parse if `resp.data` is already an object
+        localStorage.setItem('cities', JSON.stringify(dataList[0].map((el: any) => el.cityName)));
+      })
+      .catch((error) => {
+        console.error('Error fetching city list:', error);
+        // Handle the error appropriately here
+      });
   }
 
   onItemSelect(selectedItem: any) {
@@ -185,7 +185,7 @@ export class ResellProductsComponent implements OnInit {
       this.productService.addToCart(this.requestParamModel).subscribe((resp: any) => {
         if (resp.code === 1) {
           this.tostr.success("Add to Cart", "Product is Added cto Cart");
-  
+
           location.reload();
         } else {
           this.tostr.error("Add to Cart", resp.message);
@@ -226,8 +226,8 @@ export class ResellProductsComponent implements OnInit {
   }
 
   onChangeBankSlip(event: any) {
-    const file = (event.target as any).files[0]; 
-    this.placeOrderForm.patchValue({"bankSlip": file});
+    const file = (event.target as any).files[0];
+    this.placeOrderForm.patchValue({ "bankSlip": file });
   }
 
   onSubmitPlaceOrder() {
@@ -237,9 +237,9 @@ export class ResellProductsComponent implements OnInit {
     let city: any;
 
     if (location === 'outOfColombo') {
-        city = this.placeOrderForm.controls['city']?.value;
+      city = this.placeOrderForm.controls['city']?.value;
     } else {
-        city = this.placeOrderForm.controls['location']?.value;
+      city = this.placeOrderForm.controls['location']?.value;
     }
 
     //console.log("sad", this.placeOrderForm.controls['name']?.value);
@@ -259,40 +259,37 @@ export class ResellProductsComponent implements OnInit {
       this.tostr.error("Invalid City Selected", "City is required");
     }
 
-    console.log("data list",name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, bankSlip);
+    console.log("data list", name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, bankSlip);
     if (!name) {
-        this.tostr.error("Empty Field Found", "Name is required");
+      this.tostr.error("Empty Field Found", "Name is required");
     } else if (!address) {
-        this.tostr.error("Empty Field Found", "Address is required");
+      this.tostr.error("Empty Field Found", "Address is required");
     } else if (!city) {
-        this.tostr.error("Empty Field Found", "City is required");
+      this.tostr.error("Empty Field Found", "City is required");
     } else if (!district) {
-        this.tostr.error("Empty Field Found", "District is required");
-    } else if (!firstContact || firstContact.length !== 10 ) {
-        this.tostr.error("Empty Field Found", "First Contact is required or Wrong Number");
+      this.tostr.error("Empty Field Found", "District is required");
+    } else if (!firstContact || firstContact.length !== 10) {
+      this.tostr.error("Empty Field Found", "First Contact is required or Wrong Number");
     } else if (!secondContact || secondContact.length !== 10) {
-        this.tostr.error("Empty Field Found", "Second Contact is required or Wrong Number");
+      this.tostr.error("Empty Field Found", "Second Contact is required or Wrong Number");
     } else if (!paymentMethod) {
-        this.tostr.error("Empty Field Found", "Payment Method is required");
+      this.tostr.error("Empty Field Found", "Payment Method is required");
     } else {
-        if (bankSlip) {
+      if (bankSlip) {
+        this.convertImageToBase64(bankSlip).then((base64String) => {
+          console.log('slip part' + base64String)
+          this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, remark, base64String);
+        })
+      } else {
+        this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, remark);
+      }
 
-          
-            this.convertImageToBase64(bankSlip).then((base64String) => {
-              console.log('slip part' + base64String)
-                 this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, remark, base64String);
-            })
-        } else {
-         
-            this.placeOrder(name, address, city, district, firstContact, secondContact, paymentMethod, quantity, FinalTotal, remark);
-        }
-        
     }
   }
 
   verifyCity(city: any, cityList: any) {
     const f = JSON.parse(cityList);
-    
+
     var res = false;
     f.forEach((el: any) => {
       if (el === city) {
@@ -353,7 +350,7 @@ export class ResellProductsComponent implements OnInit {
   loadResellProductList() {
 
     this.requestParamModel.token = sessionStorage.getItem("authToken");
-    
+
     this.resellService.getResellProductList(this.requestParamModel).subscribe((resp: any) => {
 
       const dataList = JSON.parse(JSON.stringify(resp));
@@ -367,17 +364,17 @@ export class ResellProductsComponent implements OnInit {
     })
   }
 
-  getcartcount(){
+  getcartcount() {
     this.requestParamModel.token = sessionStorage.getItem("authToken");
-    
+
     this.resellService.getResellProductCartCount(this.requestParamModel).subscribe((resp: any) => {
 
       const dataList = JSON.parse(JSON.stringify(resp));
 
       if (resp.code === 1) {
-       
-        this.cartItemsCount =  resp.data[0]['cartItemsCount'];;
-        console.log('conut', this.cartItemsCount);    
+
+        this.cartItemsCount = resp.data[0]['cartItemsCount'];;
+        console.log('conut', this.cartItemsCount);
       }
     })
   }
@@ -417,7 +414,7 @@ export class ResellProductsComponent implements OnInit {
     );
   }
 
-  getproductDeliveryinfo(productId: string){
+  getproductDeliveryinfo(productId: string) {
     this.requestParamModel.token = sessionStorage.getItem("authToken");
     this.requestParamModel.productId = productId;
 
@@ -426,24 +423,24 @@ export class ResellProductsComponent implements OnInit {
       const dataList = JSON.parse(JSON.stringify(resp));
 
       if (resp.code === 1) {
-       console.log(dataList.data,"dataList");
-        
+        console.log(dataList.data, "dataList");
+
         // this.delivert
-       this.productInfoModel.in_colombo_charges = dataList.data[0].in_colombo_charges;
+        this.productInfoModel.in_colombo_charges = dataList.data[0].in_colombo_charges;
         this.productInfoModel.out_of_colombo_charges = dataList.data[0].out_of_colombo_charges;
-      
+
       }
     })
 
-    
-        const selectedProduct = this.filteredProducts.find(product => product.productId === productId);
-        if (selectedProduct) {
-          const resellPrice = selectedProduct.resellPrice;
-          console.log("Resell Price for product with ID '11':", resellPrice);
-          this.cartItemModel.totalAmount = resellPrice;
-        } else {
-          console.log("Product with ID '11' not found in the list.");
-        }
+
+    const selectedProduct = this.filteredProducts.find(product => product.productId === productId);
+    if (selectedProduct) {
+      const resellPrice = selectedProduct.resellPrice;
+      console.log("Resell Price for product with ID '11':", resellPrice);
+      this.cartItemModel.totalAmount = resellPrice;
+    } else {
+      console.log("Product with ID '11' not found in the list.");
+    }
   }
 
   onSetDeliveryCharge() {
@@ -461,7 +458,7 @@ export class ResellProductsComponent implements OnInit {
 
   onLocationChange(event: any) {
     const selectedValue = event.target.value;
-    
+
     const location = this.placeOrderForm.controls['location']?.value;
     const inColomboCheck = this.placeOrderForm.controls['inColombo'].value;
     const cityControl = this.placeOrderForm.get('city');
@@ -469,41 +466,40 @@ export class ResellProductsComponent implements OnInit {
     const QuantityValue = Quantity?.value;
     console.log("Selected location: ", location);
     if (cityControl) {
-        if (inColomboCheck === '1') {
-          console.log("Selected Value: ", selectedValue);
-            cityControl.enable();
-           
+      if (inColomboCheck === '1') {
+        console.log("Selected Value: ", selectedValue);
+        cityControl.enable();
 
-            const totalAmount = parseFloat(this.cartItemModel.totalAmount);
-            const outOfColomboCharges = parseFloat(this.productInfoModel.out_of_colombo_charges);
-            const totalqunity = parseFloat(QuantityValue);
-            const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
-           
-            this.finalTotalAmount = fullTotal;
-            console.log("fisnl Value: ", fullTotal);
-           
-        } else {
-            cityControl.disable();
-            cityControl.setValue(''); 
-            const totalAmount = parseFloat(this.cartItemModel.totalAmount);
-            const totalqunity = parseFloat(QuantityValue);
-            const outOfColomboCharges = parseFloat(this.productInfoModel.in_colombo_charges);
 
-            const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
-            this.finalTotalAmount = fullTotal;
-            console.log("in Value: ", fullTotal);
-        }
+        const totalAmount = parseFloat(this.cartItemModel.totalAmount);
+        const outOfColomboCharges = parseFloat(this.productInfoModel.out_of_colombo_charges);
+        const totalqunity = parseFloat(QuantityValue);
+        const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
+
+        this.finalTotalAmount = fullTotal;
+        console.log("fisnl Value: ", fullTotal);
+
+      } else {
+        cityControl.disable();
+        cityControl.setValue('');
+        const totalAmount = parseFloat(this.cartItemModel.totalAmount);
+        const totalqunity = parseFloat(QuantityValue);
+        const outOfColomboCharges = parseFloat(this.productInfoModel.in_colombo_charges);
+
+        const fullTotal = (totalAmount * totalqunity) + outOfColomboCharges;
+        this.finalTotalAmount = fullTotal;
+        console.log("in Value: ", fullTotal);
+      }
     }
-   
+
   }
 
   isOutOfColombo() {
-     const locationControl = this.placeOrderForm.get('location');
+    const locationControl = this.placeOrderForm.get('location');
     return locationControl?.value === 'outOfColombo';
   }
 
-  onClickupdateProduct(productId: string)
-  {
+  onClickupdateProduct(productId: string) {
     this.Updateprice = productId;
     /*this.requestParamModel.token = sessionStorage.getItem("authToken");
     this.requestParamModel.productId = productId;
@@ -517,7 +513,7 @@ export class ResellProductsComponent implements OnInit {
     })*/
   }
 
-  onClickupdateProductApi(){
+  onClickupdateProductApi() {
 
     //console.log('data update>>>>>>',this.priceupdateform.controls['URprice'].value);
     this.requestParamModel.token = sessionStorage.getItem("authToken");
@@ -533,6 +529,6 @@ export class ResellProductsComponent implements OnInit {
       }
     })
   }
-  
+
 
 }
