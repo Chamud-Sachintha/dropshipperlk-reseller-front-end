@@ -19,6 +19,7 @@ import { HeaderBannerComponent } from './header-banner/header-banner.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReportsComponent } from './reports/reports.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ExcelOrderUploadComponent } from './excel-order-upload/excel-order-upload.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     SessionInfoComponent,
     CartComponent,
     HeaderBannerComponent,
-    ReportsComponent
+    ReportsComponent,
+    ExcelOrderUploadComponent
   ],
   imports: [
     CommonModule,

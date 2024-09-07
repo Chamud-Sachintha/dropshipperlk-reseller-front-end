@@ -13,6 +13,8 @@ import { MyTeamComponent } from './my-team/my-team.component';
 import { AuthGuard } from '../../guards/Auth/auth.guard';
 import { CartComponent } from './cart/cart.component';
 import { ReportsComponent } from './reports/reports.component';
+import { Auth } from 'src/app/shared/models/Auth/auth';
+import { ExcelOrderUploadComponent } from './excel-order-upload/excel-order-upload.component';
 
 const routes: Routes = [
   {
@@ -72,6 +74,11 @@ const routes: Routes = [
   {
     path: 'my-team',
     component: MyTeamComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'upload-excel',
+    component: ExcelOrderUploadComponent,
     canActivate: [AuthGuard]
   },
   {
