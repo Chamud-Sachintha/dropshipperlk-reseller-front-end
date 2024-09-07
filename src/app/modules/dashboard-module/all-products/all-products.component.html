@@ -26,6 +26,7 @@
         <div>
           <h5 class="card-title">{{ eachProduct.productName }}</h5>
           <h3 class="mb-0 font-weight-semibold">LKR. {{ eachProduct.price }}</h3>
+          <span class="badge badge-light">ID: {{ eachProduct.id }}</span>
           <span class="badge badge-danger" *ngIf="!eachProduct.inStock">Out of Stock</span>
         </div>
        
