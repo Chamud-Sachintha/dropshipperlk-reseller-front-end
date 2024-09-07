@@ -20,6 +20,7 @@ export class ExcelOrderUploadComponent implements OnInit {
   filteredOrderRequestList: OrderInfo[] = [];
   errLogList: any[] = [];
   isOrdersAlreadyHave = false;
+  selectedFile: File | null = null;
 
   currentPage = 1;
   itemsPerPage = 10;
@@ -35,6 +36,57 @@ export class ExcelOrderUploadComponent implements OnInit {
     this.filteredOrderRequestList = this.orderInfoList; 
   }
 
+  onClickClearTables() {
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+    
+    this.orderService.clearAllTempTables(this.requestParamModel).subscribe((resp: any) => {
+      if (resp.code === 1) {
+        this.tostr.success("All Tables are Cleared", "Tables Clreared");
+      } else {
+        this.tostr.error("Error Occured.", "Table Clearing");
+      }
+    })
+
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
+  }
+
+  // Triggered when file is selected
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.selectedFile = file;
+      this.uploadFile();
+    }
+  }
+
+  uploadFile(): void {
+    if (this.selectedFile) {
+
+      const token: any = sessionStorage.getItem("authToken");
+
+      const formData: FormData = new FormData();
+      formData.append('token', token);
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+
+      this.spinner.show();
+      this.orderService.importOrderExcelTemplateFile(formData).subscribe((resp: any) => {
+        if (resp.code === 1) {
+          this.tostr.success("Importing Success", "Excel Upload");
+        } else {
+          this.tostr.error("Error mOccured", resp.message);
+        }
+
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      })
+      this.spinner.hide();
+    }
+  }
+
   onClickProceedOrders() {
     this.requestParamModel.token = sessionStorage.getItem("authToken");
     this.requestParamModel.flag = sessionStorage.getItem("role");
@@ -46,6 +98,10 @@ export class ExcelOrderUploadComponent implements OnInit {
       } else {
         this.tostr.error("Import Error Occured", "Order Importing");
       }
+
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     })
     this.spinner.hide();
   }

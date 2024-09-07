@@ -12,9 +12,10 @@
                     <h2 class="pageheader-title">Hello, Welcome</h2>
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-primary btn-sm" style="float: right; margin-left: 5px;">Clear Tables</button>
+                    <button class="btn btn-primary btn-sm" style="float: right; margin-left: 5px;" (click)="onClickClearTables()">Clear Tables</button>
                     <button *ngIf="this.isOrdersAlreadyHave" class="btn btn-primary btn-sm" style="float: right;" (click)="onClickProceedOrders()">Proceed Orders</button>
-                    <button *ngIf="!this.isOrdersAlreadyHave" class="btn btn-primary btn-sm" style="float: right;">Upload Excel</button>
+                    <button *ngIf="!this.isOrdersAlreadyHave" class="btn btn-primary btn-sm" style="float: right;" (click)="fileInput.click()">Upload Excel</button>
+                    <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" accept=".csv" />
                 </div>
             </div>
             <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis

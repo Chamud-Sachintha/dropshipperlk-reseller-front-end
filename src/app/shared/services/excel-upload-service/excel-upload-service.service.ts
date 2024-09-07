@@ -24,4 +24,14 @@ export class ExcelUploadServiceService {
     const path = environment.apiURL + "proceed-temp-orders";
     return this.hhttp.post(path, requestParamModel);
   }
+
+  importOrderExcelTemplateFile(requestParamModel: FormData) {
+    const path = environment.apiURL + "excel-upload-orders";
+    return this.hhttp.post(path, requestParamModel);
+  }
+
+  clearAllTempTables(requestParamModel: Request) {
+    const path = environment.apiURL + "clear-temp";
+    return this.hhttp.post(path, requestParamModel);
+  }
 }
