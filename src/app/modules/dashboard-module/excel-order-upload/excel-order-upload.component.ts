@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { OrderInfo } from 'src/app/shared/models/OrderInfo/order-info';
 import { Request } from 'src/app/shared/models/Request/request';
 import { ExcelUploadServiceService } from 'src/app/shared/services/excel-upload-service/excel-upload-service.service';
@@ -16,17 +18,51 @@ export class ExcelOrderUploadComponent implements OnInit {
   orderInfoList: OrderInfo[] = [];
   searchText = '';
   filteredOrderRequestList: OrderInfo[] = [];
+  errLogList: any[] = [];
   isOrdersAlreadyHave = false;
 
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 100;
 
-  constructor (private orderService: ExcelUploadServiceService, private router: Router) {}
+  constructor (private orderService: ExcelUploadServiceService, private router: Router, private spinner: NgxSpinnerService
+                , private tostr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.loadOrderList();
+    this.loadErrorLogs();
     this.filteredOrderRequestList = this.orderInfoList; 
+  }
+
+  onClickProceedOrders() {
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+    this.requestParamModel.flag = sessionStorage.getItem("role");
+
+    this.spinner.show();
+    this.orderService.proceedTempOrders(this.requestParamModel).subscribe((resp: any) => {
+      if (resp.code === 1) {
+        this.tostr.success("Order Import Sucessfully", "Order Importing");
+      } else {
+        this.tostr.error("Import Error Occured", "Order Importing");
+      }
+    })
+    this.spinner.hide();
+  }
+
+  loadErrorLogs() {
+    this.requestParamModel.token = sessionStorage.getItem("authToken");
+    this.requestParamModel.flag = sessionStorage.getItem("role");
+
+    this.orderService.getErrLogs(this.requestParamModel).subscribe((resp: any) => {
+      if (resp.code === 1) {
+        const dataList = JSON.parse(JSON.stringify(resp.data));
+
+        dataList[0].forEach((el: any) => {
+          this.errLogList.push(el);
+        })
+      }
+    })
   }
 
   filterOrderRequestList() {

@@ -14,4 +14,14 @@ export class ExcelUploadServiceService {
     const path = environment.apiURL + "get-temp-order-list";
     return this.hhttp.post(path, requestParamModel);
   }
+
+  getErrLogs(requestParamModel: Request) {
+    const path = environment.apiURL + "get-err-logs";
+    return this.hhttp.post(path, requestParamModel);
+  }
+
+  proceedTempOrders(requestParamModel: Request) {
+    const path = environment.apiURL + "proceed-temp-orders";
+    return this.hhttp.post(path, requestParamModel);
+  }
 }
