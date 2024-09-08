@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - common
+      - master
   workflow_dispatch:  # Allows manual triggering via GitHub's Actions tab
 jobs:
   build:
@@ -28,6 +28,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 700 ~/.ssh/id_rsa
-          scp -P 21098 -o StrictHostKeyChecking=no -r ./dist/dist dripmvuk@server350.web-hosting.com:/home/dripmvuk/testreseller.dropshipper.lk
+          scp -P 21098 -o StrictHostKeyChecking=no -r ./dist/dist dripmvuk@server350.web-hosting.com:/home/dripmvuk/reseller.dropshipper.lk
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
