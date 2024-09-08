@@ -6,6 +6,7 @@ import { OrderInfo } from 'src/app/shared/models/OrderInfo/order-info';
 import { Request } from 'src/app/shared/models/Request/request';
 import { ExcelUploadServiceService } from 'src/app/shared/services/excel-upload-service/excel-upload-service.service';
 import { OrderService } from 'src/app/shared/services/order/order.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-excel-order-upload',
@@ -34,6 +35,13 @@ export class ExcelOrderUploadComponent implements OnInit {
     this.loadOrderList();
     this.loadErrorLogs();
     this.filteredOrderRequestList = this.orderInfoList; 
+  }
+
+  onClickDownloadTemplate() {
+    let fileUrl = new URL(environment.apiURL);
+    var finalDomainRoot = fileUrl.protocol + "//" + fileUrl.hostname + "/" + "order_upload_template" + "/" + "order_template.csv";
+
+    window.open(finalDomainRoot);
   }
 
   onClickClearTables() {

@@ -12,6 +12,7 @@
                     <h2 class="pageheader-title">Hello, Welcome</h2>
                 </div>
                 <div class="col-6">
+                    <button class="btn btn-primary btn-sm" style="float: right; margin-left: 5px;" (click)="onClickDownloadTemplate()">Download Template</button>
                     <button class="btn btn-primary btn-sm" style="float: right; margin-left: 5px;" (click)="onClickClearTables()">Clear Tables</button>
                     <button *ngIf="this.isOrdersAlreadyHave" class="btn btn-primary btn-sm" style="float: right;" (click)="onClickProceedOrders()">Proceed Orders</button>
                     <button *ngIf="!this.isOrdersAlreadyHave" class="btn btn-primary btn-sm" style="float: right;" (click)="fileInput.click()">Upload Excel</button>
